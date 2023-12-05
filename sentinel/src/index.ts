@@ -5,9 +5,13 @@ import MongoStore from 'connect-mongo';
 import passport from './passport-setup';
 import indexRouter from './routes/index'; // Import the index route
 import authRouter from './routes/auth';   // Import the auth route
-
+import mongoose  from 'mongoose';
 const app = express();
 const port = 3000;
+
+mongoose.connect(process.env.MONGO_URL as string)
+  .then(() => console.log('MongoDB connected…'))
+  .catch(err => console.log(err));
 
 app.use(session({
   store: MongoStore.create({ mongoUrl: process.env.MONGO_URL as string }),
