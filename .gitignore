@@ -1,1 +1,3 @@
 sentinel/node_modules
+secrets.json
+.env
