@@ -27,7 +27,7 @@ passport.use(new GoogleStrategy({
 }));
 
 passport.serializeUser((user: User, done) => {
-  done(null, user.id); // or whatever unique identifier you have for the user
+  done(null, (user as any).googleId); // or whatever unique identifier you have for the user
 });
 
 passport.deserializeUser(async (googleId: string, done) => {
