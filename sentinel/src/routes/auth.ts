@@ -14,11 +14,14 @@ router.get('/google/callback',
   (req: Request, res: Response) => {
     // Successful authentication, redirect home.
     logger.info('Google authentication successful, redirecting to home');
-    res.redirect('/');
+    const authorizationCode = req.query.code;
+    console.log('Authorization Code:', authorizationCode);
+    res.redirect('/test');
   },
   (err: Errback, req: Request, res: Response, next: NextFunction) => {
     // Error handler
     logger.error(`Google authentication error: ${err}`);
+    
     res.redirect('/login');
   }
 );

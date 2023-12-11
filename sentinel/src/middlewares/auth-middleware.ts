@@ -2,7 +2,8 @@ import { NextFunction, Request, Response } from "express";
 import logger from '../logger';
 
 export const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
-  logger.info(req.isAuthenticated())
+  logger.info(req.isAuthenticated());
+  console.log(req.user);
   if (req.isAuthenticated()) {
     return next();
   }

@@ -5,6 +5,7 @@ import MongoStore from 'connect-mongo';
 import passport from './passport-setup';
 import indexRouter from './routes/index'; // Import the index route
 import authRouter from './routes/auth';   // Import the auth route
+import userRouter from './routes/user-account';
 import mongoose  from 'mongoose';
 const app = express();
 const port = 3000;
@@ -30,6 +31,7 @@ app.use(passport.session());
 // Use the routes
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
+app.use('/userAccounts', userRouter)
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);

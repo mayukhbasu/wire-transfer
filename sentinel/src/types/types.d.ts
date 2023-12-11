@@ -1,5 +1,6 @@
 declare namespace Express {
   export interface User {
-    id: string
+    id: string;
+    displayName?: string
   }
 }
