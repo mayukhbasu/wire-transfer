@@ -9,9 +9,10 @@ export enum AccountType {
 }
 
 interface IAccount extends Document {
+  _id: mongoose.Types.ObjectId;
   balance: number;
   createdAt: Date;
-  customerId: mongoose.Schema.Types.ObjectId;
+  customerId: mongoose.Types.ObjectId;
   type: AccountType;
 }
 
@@ -22,5 +23,5 @@ const accountSchema = new mongoose.Schema<IAccount>({
   type: { type: String, enum: Object.values(AccountType), required: true }
 });
 
-const Account = mongoose.model<IAccount>('Account', accountSchema);
+const Account = mongoose.models.Account || mongoose.model<IAccount>('Account', accountSchema);
 export default Account;

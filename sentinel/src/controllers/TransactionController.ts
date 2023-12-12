@@ -20,28 +20,38 @@ export class TransactionController {
     this.transactionService = new TransactionService();
   }
 
-  public async startTransaction(req: Request, res: Response): Promise<any> {
+  public async startTransaction(req: Request, res: Response): Promise<Response> {
     try {
       logger.info("Initiated transaction");
       if (!req.user?.id) {
         return res.status(400).json({ message: 'User ID is missing' });
       }
-      const customerId: any = await this.transactionService.findCustomerId(req.user.id as string);
+
+      // Find the customer ID based on the user's ID
+      const customerId = await this.transactionService.findCustomerId(req.user.id);
+      if (!customerId) {
+        return res.status(404).json({ message: 'Customer not found' });
+      }
       logger.info(`Customer Id is ${customerId}`);
+
+      // Construct transaction data
       const transactionData: Partial<ITransaction> = {
         fromAccount: req.body.fromAccount,
         toAccount: req.body.toAccount,
         amount: req.body.amount,
-        status: TransactionType.Pending, // Or set this to 'pending' by default
-        customerId: customerId._id,
+        status: TransactionType.Pending, // Set this to 'pending' by default
+        customerId: customerId,
         accountId: req.body.accountId
       };
-      res.send(transactionData)
-      //console.log(transactionData);
 
-    } catch(err) {
+      // Create the transaction and send it to the message queue
+      const transaction = await this.transactionService.createTransaction(transactionData);
 
+      // Return the created transaction data
+      return res.status(201).json(transaction);
+    } catch (err) {
+      logger.error('Error in startTransaction:', err);
+      return res.status(500).json({ message: 'Internal Server Error' });
     }
-  } 
-
+  }
 }

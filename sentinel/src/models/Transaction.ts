@@ -11,8 +11,8 @@ export interface ITransaction extends Document {
   toAccount: string;
   amount: number;
   status: TransactionType;
-  customerId: mongoose.Schema.Types.ObjectId;
-  accountId: mongoose.Schema.Types.ObjectId;
+  customerId: mongoose.Types.ObjectId;
+  accountId: mongoose.Types.ObjectId;
   createdAt: Date;
 }
 
@@ -26,7 +26,7 @@ const transactionSchema = new Schema<ITransaction>({
   accountId: {type: mongoose.Schema.Types.ObjectId, ref: 'Account', required: true}
 });
 
-const Transaction = mongoose.model<ITransaction>('Account', transactionSchema);
+const Transaction = mongoose.model<ITransaction>('Transaction', transactionSchema);
 export default Transaction;
 
 
