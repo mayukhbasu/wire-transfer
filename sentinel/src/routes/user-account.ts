@@ -7,6 +7,6 @@ const userController = new UserController();
 
 router.post('/createCustomer',isAuthenticated, (req: Request, res: Response) => userController.createUserAccount(req, res))
 router.get('/createCustomer', isAuthenticated, (req: Request, res: Response) => userController.getUserAccounts(req, res));
-router.post('/createAccount', isAuthenticated, (req: Request, res: Response) => userController.createOtherAccounts(req, res));
+router.post('/updatebalance', isAuthenticated, (req: Request, res: Response) => userController.updatebalance(req, res));
 
 export default router;

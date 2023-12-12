@@ -51,7 +51,7 @@ export class UserController {
     if(!acceptedAccountTypes.includes(accountType)) {
       return res.status(400).send({ message: 'Invalid account type. Accepted types are savings, current, and investment.' });
     }
-    logger.info("account typoe is ",req.body)
+    logger.info("account type is ",req.body)
     const accountExists = await this.userService.getAccountType(fullName, accountType);
     if(accountExists) {
       return res.send({success: false, message: "Account type already exists"});
@@ -61,5 +61,24 @@ export class UserController {
       res.send({newAccountStatus: newAccount, message: "Account created successfully"});
     }
     //res.send(accountExists);
+  }
+
+  public async updatebalance(req: Request, res: Response): Promise<any> {
+    try {
+      logger.info("Started executing update balance function");
+      const fullName = req.user?.displayName;
+      const updateBalance = await this.userService.addBalanceToIndividualAccount(fullName as string, req.body);
+      if(updateBalance.success) {
+        logger.info("balance has been updated successfully");
+        return res.send({success: true})
+      } else {
+        return res.send({success: false})
+      }
+      
+    } catch(err) {
+      logger.error(`An error occurred ${err}`);
+      return res.send({success: false})
+    }
+    
   }
 }

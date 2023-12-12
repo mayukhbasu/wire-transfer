@@ -7,6 +7,11 @@ import Customer, { CustomerType } from "../models/Customer";
 import logger from '../logger';
 
 
+interface BalanceUpdateInfo {
+  savings?: number;
+  current?: number;
+  investment?: number;
+}
 
 export class UserService {
 
@@ -93,6 +98,29 @@ export class UserService {
     }
     
     //return false
+  }
+
+  async addBalanceToIndividualAccount(userName: string, balanceAdditionInfo: BalanceUpdateInfo): Promise<{success: boolean, error?: string | undefined}> {
+    try {
+      const customer = await Customer.findOne({fullName: userName});
+      if(!customer) {
+        return {success: false, error: 'User does not exist'}
+      }
+      const accounts = await Account.find({customerId: customer._id});
+      await Promise.all(accounts.map(async account => {
+        const accountType = account.type as keyof BalanceUpdateInfo;
+        const additionAmount = balanceAdditionInfo[accountType];
+        if(additionAmount) {
+          account.balance += additionAmount;
+          await account.save();
+          logger.info(`Added ${additionAmount} to ${accountType} account: ${account._id}`);
+        }
+      }));
+      return { success: true };
+    } catch(error) {
+      logger.error('Error in addBalanceToIndividualAccounts:', error);
+      return { success: false, error: 'An error occurred while updating balances' };
+    }
   }
 
 
