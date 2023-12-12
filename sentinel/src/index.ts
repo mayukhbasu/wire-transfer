@@ -11,6 +11,7 @@ import indexRouter from './routes/index'; // Import the index route
 import authRouter from './routes/auth';   // Import the auth route
 import userRouter from './routes/user-account';
 import transactionRouter from './routes/transaction';
+import consumer from './utils/queueConsumer';
 
 const app = express();
 const port = 3000;
@@ -18,6 +19,10 @@ const port = 3000;
 mongoose.connect(process.env.MONGO_URL as string)
   .then(() => console.log('MongoDB connected…'))
   .catch(err => console.log(err));
+
+consumer.connect().catch((error) => {
+  console.error('Failed to connect to RabbitMQ for consuming:', error);
+});
 
 app.use(session({
   store: MongoStore.create({ mongoUrl: process.env.MONGO_URL as string }),
@@ -43,4 +48,16 @@ app.use('/transaction', transactionRouter);
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
+});
+
+process.on('SIGINT', () => {
+  consumer.close().finally(() => {
+    process.exit(0);
+  });
+});
+
+process.on('SIGTERM', () => {
+  consumer.close().finally(() => {
+    process.exit(0);
+  });
 });

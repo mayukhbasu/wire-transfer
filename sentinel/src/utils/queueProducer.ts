@@ -27,12 +27,13 @@ class QueueProducer {
     if (!this.channel) {
       throw new Error('Cannot send message, channel not initialized');
     }
-
+    logger.info(`Message sent to queue`)
     return this.channel.sendToQueue(QUEUE_NAME, message, { persistent: true });
   }
 
   // Close the connection and channel
   async close(): Promise<void> {
+    logger.info("Queue Closed")
     if (this.channel) {
       await this.channel.close();
       this.channel = null;
@@ -46,14 +47,14 @@ class QueueProducer {
 }
 
 // Create a single instance of the QueueProducer
-const producer = new QueueProducer(process.env.RABBITMQ_URI || 'amqp://localhost');
+const producer = new QueueProducer(process.env.RABBITMQ_URI || 'amqp://localhost:5672');
 producer.connect().catch((error) => logger.error('Failed to connect to RabbitMQ:', error));
 
 export const sendToQueue = async (transaction: any) => {
   try {
     const message = Buffer.from(JSON.stringify(transaction));
     await producer.sendToQueue(message);
-    logger.info('Message sent to queue');
+    logger.info('Message sent to queue again');
   } catch (error) {
     logger.error('Error sending message to queue:', error);
     throw error;
@@ -63,8 +64,8 @@ export const sendToQueue = async (transaction: any) => {
 export const closeQueueConnection = () => producer.close();
 
 // Make sure to handle process termination:
-process.on('exit', closeQueueConnection);
-process.on('SIGINT', closeQueueConnection);
-process.on('SIGTERM', closeQueueConnection);
+// process.on('exit', closeQueueConnection);
+// process.on('SIGINT', closeQueueConnection);
+// process.on('SIGTERM', closeQueueConnection);
 
 export default producer;
