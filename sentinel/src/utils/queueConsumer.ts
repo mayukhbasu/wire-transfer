@@ -1,5 +1,10 @@
 import amqp, { Channel, Connection, ConsumeMessage } from 'amqplib';
+import mongoose  from 'mongoose';
+import { ObjectId } from 'mongodb';
+
 import logger from '../logger';
+import { ITransaction } from '../models/Transaction';
+import Account from '../models/Accounts';
 
 const QUEUE_NAME = 'transactions';
 
@@ -27,18 +32,46 @@ class QueueConsumer {
   // Handle incoming messages from the queue
   private async handleMessage(msg: ConsumeMessage | null): Promise<void> {
     logger.info(`Inside Handle message`);
+    const session = await mongoose.startSession();
+    session.startTransaction();
     if (msg === null) {
       return;
     }
     try {
-      const transaction = JSON.parse(msg.content.toString());
+      const transaction: ITransaction = JSON.parse(msg.content.toString());
       logger.info('Received message:', transaction);
       // Process the transaction here
+      
+      const sourceAccountData = await Account.findById({ "_id": new ObjectId(transaction.fromAccount)},
+       {"_id": 1, "balance": 1}, {session});
+      const destinationAccountdata = await Account.findById({ "_id": new ObjectId(transaction.toAccount)}, 
+      {"_id": 1, "balance": 1}, {session});
+      
+      if(!sourceAccountData || !destinationAccountdata) {
+        throw new Error(`Source or destination account does not exist`);
+      }
+      
+      logger.info(`Existing balance is ${sourceAccountData.balance}`);
 
+      if(transaction.amount > sourceAccountData.balance) {
+        throw new Error('Insufficient funds');
+      }
+
+      sourceAccountData.balance -= transaction.amount;
+      await sourceAccountData.save({session});
+
+      destinationAccountdata.balance += transaction.amount;
+      await destinationAccountdata.save({ session });
+      await session.commitTransaction();
+      logger.info(`Transaction has completed successfully`);
       this.channel?.ack(msg); // Acknowledge the message
     } catch (error) {
       logger.error('Error processing message:', error);
-      this.channel?.nack(msg); // Reject the message
+      await session.abortTransaction();
+      this.channel?.nack(msg, false, false); // Reject the message
+      throw error;
+    } finally {
+      session.endSession();
     }
   }
 

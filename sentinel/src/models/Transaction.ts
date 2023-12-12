@@ -12,7 +12,6 @@ export interface ITransaction extends Document {
   amount: number;
   status: TransactionType;
   customerId: mongoose.Types.ObjectId;
-  accountId: mongoose.Types.ObjectId;
   createdAt: Date;
 }
 
@@ -23,7 +22,6 @@ const transactionSchema = new Schema<ITransaction>({
   status: {type: String, enum: Object.values(TransactionType), required: true},
   createdAt: {type: Date, default: Date.now },
   customerId: {type: mongoose.Schema.Types.ObjectId, ref: 'Customer', required: true},
-  accountId: {type: mongoose.Schema.Types.ObjectId, ref: 'Account', required: true}
 });
 
 const Transaction = mongoose.model<ITransaction>('Transaction', transactionSchema);

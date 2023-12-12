@@ -64,8 +64,8 @@ export const sendToQueue = async (transaction: any) => {
 export const closeQueueConnection = () => producer.close();
 
 // Make sure to handle process termination:
-// process.on('exit', closeQueueConnection);
-// process.on('SIGINT', closeQueueConnection);
-// process.on('SIGTERM', closeQueueConnection);
+process.on('exit', closeQueueConnection);
+process.on('SIGINT', closeQueueConnection);
+process.on('SIGTERM', closeQueueConnection);
 
 export default producer;
