@@ -28,7 +28,9 @@
     "typescript": "^5.3.2"
   },
   "dependencies": {
+    "@types/amqplib": "^0.10.4",
     "@types/mongoose": "^5.11.97",
+    "amqplib": "^0.10.3",
     "body-parser": "^1.20.2",
     "connect-mongo": "^4.6.0",
     "connect-redis": "^7.1.0",

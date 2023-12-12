@@ -2,12 +2,10 @@ import mongoose from "mongoose";
 import logger from "../logger";
 import Customer from "../models/Customer";
 import Transaction, { ITransaction } from "../models/Transaction";
+import { sendToQueue } from "../utils/queueProducer";
 
 export class TransactionService {
 
-  async initiateTransaction(transactionData: ITransaction): Promise<any> {
-    return null
-  }
 
   async findCustomerId(userId: string): Promise<mongoose.Types.ObjectId | null> {
     try {
@@ -27,9 +25,9 @@ export class TransactionService {
       await transaction.save();
 
       // Send the transaction data to RabbitMQ queue
-      //await sendToQueue(transaction);
+      await sendToQueue(transaction);
 
-      //return transaction;
+      return transaction;
     } catch (error) {
       logger.error('Error creating transaction:', error);
       throw error;
