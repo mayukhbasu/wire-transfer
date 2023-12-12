@@ -14,7 +14,8 @@ export class UserController {
     try {
       logger.info("Starting to create new customer and account");
       const fullName = req.user?.displayName;
-      const result = await this.userService.createCustomerAccount({fullName});
+      const userId = req.user?.id;
+      const result = await this.userService.createCustomerAccount({fullName, userId});
       if(!result.success) {
         console.error('Error creating customer:', result.error);
         return res.status(400).json({ message: 'Error creating customer', error: result.error });

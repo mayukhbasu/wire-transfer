@@ -2,12 +2,16 @@ require('dotenv').config();
 import express from 'express';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
+import mongoose  from 'mongoose';
+import bodyParser from 'body-parser';
+
+
 import passport from './passport-setup';
 import indexRouter from './routes/index'; // Import the index route
 import authRouter from './routes/auth';   // Import the auth route
 import userRouter from './routes/user-account';
-import mongoose  from 'mongoose';
-import bodyParser from 'body-parser';
+import transactionRouter from './routes/transaction';
+
 const app = express();
 const port = 3000;
 
@@ -35,6 +39,7 @@ app.use(bodyParser.json());
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/userAccounts', userRouter)
+app.use('/transaction', transactionRouter); 
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);

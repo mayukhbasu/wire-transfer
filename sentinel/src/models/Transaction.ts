@@ -1,13 +1,12 @@
 import mongoose, { Schema } from 'mongoose';
-
-export enum TransactionType {
+ enum TransactionType {
   Pending = "pending",
   Completed = "completed",
   Failed = "failed",
   // Add more account types as needed
 }
 
-interface ITransaction extends Document {
+export interface ITransaction extends Document {
   fromAccount: string;
   toAccount: string;
   amount: number;

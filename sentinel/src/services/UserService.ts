@@ -17,7 +17,11 @@ export class UserService {
 
   async createCustomerAccount(userData: any): Promise<{success: boolean, error? : string | null}> {
     try {
-      const customer = new Customer(userData);
+      logger.info(userData);
+      const customer = new Customer({
+        ...userData,
+        user: userData.userId
+      });
       await customer.save();
       const defaultAccount = new Account({
         balance: 0,
