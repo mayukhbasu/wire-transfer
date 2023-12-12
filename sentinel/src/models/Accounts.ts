@@ -3,7 +3,7 @@ import mongoose, { Document } from 'mongoose';
 
 export enum AccountType {
   Savings = "savings",
-  Checking = "checking",
+  Checking = "current",
   Investment = "investment",
   // Add more account types as needed
 }

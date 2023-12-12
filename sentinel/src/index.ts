@@ -7,6 +7,7 @@ import indexRouter from './routes/index'; // Import the index route
 import authRouter from './routes/auth';   // Import the auth route
 import userRouter from './routes/user-account';
 import mongoose  from 'mongoose';
+import bodyParser from 'body-parser';
 const app = express();
 const port = 3000;
 
@@ -27,6 +28,8 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // Use the routes
 app.use('/', indexRouter);
