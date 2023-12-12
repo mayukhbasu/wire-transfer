@@ -1,0 +1,37 @@
+import mongoose, { Schema } from 'mongoose';
+
+export enum TransactionType {
+  Pending = "pending",
+  Completed = "completed",
+  Failed = "failed",
+  // Add more account types as needed
+}
+
+interface ITransaction extends Document {
+  fromAccount: string;
+  toAccount: string;
+  amount: number;
+  status: TransactionType;
+  customerId: mongoose.Schema.Types.ObjectId;
+  accountId: mongoose.Schema.Types.ObjectId;
+  createdAt: Date;
+}
+
+const transactionSchema = new Schema<ITransaction>({
+  fromAccount: {type: String, required: true},
+  toAccount: {type: String, required: true},
+  amount: {type: Number, required: true},
+  status: {type: String, enum: Object.values(TransactionType), required: true},
+  createdAt: {type: Date, default: Date.now },
+  customerId: {type: mongoose.Schema.Types.ObjectId, ref: 'Customer', required: true},
+  accountId: {type: mongoose.Schema.Types.ObjectId, ref: 'Account', required: true}
+});
+
+const Transaction = mongoose.model<ITransaction>('Account', transactionSchema);
+export default Transaction;
+
+
+
+
+
+
