@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { UserService } from "../services/UserService";
 import logger from "../logger";
-import { CustomerType } from "../models/Customer";
 import { AccountType } from "../models/Accounts";
 
 export class UserController {
@@ -78,6 +77,23 @@ export class UserController {
     } catch(err) {
       logger.error(`An error occurred ${err}`);
       return res.send({success: false})
+    }
+    
+  }
+
+  public async getTotalbalance(req: Request, res: Response): Promise<any> {
+    logger.info(`Started to execute get total balance`);
+    try {
+      const fullName = req.user?.displayName;
+      if(!fullName) {
+        return res.send({success: false, message: `Name does not exist`})
+      }
+      const result = await this.userService.getTotalBalance(fullName as string);
+      res.send({success: true, result});
+      logger.info(`Get total balance execution is successful`);
+    } catch(err) {
+      logger.error(`Get total balance execution has failed`);
+      res.send({success: false, message: 'An error occurred while getting the data'});
     }
     
   }

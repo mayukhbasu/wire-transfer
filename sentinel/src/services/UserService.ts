@@ -123,5 +123,26 @@ export class UserService {
     }
   }
 
+  async getTotalBalance(fullName: string): Promise<Number> {
+    try {
+      let totalBalance = 0;
+      logger.info(`Started to execute get total balance`);
+      const customerId = await Customer.findOne({fullName: fullName}, '_id');
+      const accounts = await Account.find({customerId: customerId});
+      logger.info(`Accounts are ${accounts}`);
+      await Promise.all(accounts.map(async account => {
+        totalBalance += account.balance;
+        await account.save();
+        logger.info(`Total balance is ${totalBalance}`);
+      }))
+      return totalBalance;
+    } catch(error) {
+      logger.error(`An error occurred while getting the balance, ${error}`);
+      return 0;
+    }
+    
+    
+  }
+
 
 }
