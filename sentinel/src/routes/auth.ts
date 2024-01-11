@@ -16,7 +16,7 @@ router.get('/google/callback',
     logger.info('Google authentication successful, redirecting to home');
     const authorizationCode = req.query.code;
     console.log('Authorization Code:', authorizationCode);
-    res.redirect('/test');
+    res.redirect(`${process.env.REDIRECT_URL}/home`);
   },
   (err: Errback, req: Request, res: Response, next: NextFunction) => {
     // Error handler

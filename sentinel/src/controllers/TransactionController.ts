@@ -41,7 +41,6 @@ export class TransactionController {
         amount: req.body.amount,
         status: TransactionType.Pending, // Set this to 'pending' by default
         customerId: customerId,
-        accountId: req.body.accountId
       };
 
       // Create the transaction and send it to the message queue
