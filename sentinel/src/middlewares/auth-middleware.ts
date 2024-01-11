@@ -9,5 +9,5 @@ export const isAuthenticated = (req: Request, res: Response, next: NextFunction)
   }
   
   // If not authenticated, redirect to the login page or send an error
-  res.status(401).send('Not Authenticated');// or res.status(401).send('Not Authenticated');
+  res.status(401).send({message: 'Not Authenticated'});// or res.status(401).send('Not Authenticated');
 };
