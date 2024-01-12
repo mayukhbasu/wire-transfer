@@ -1,6 +1,7 @@
 import { Dispatch } from "redux";
 import { GET_CUSTOMER_INFO_FAILURE, GET_CUSTOMER_INFO_REQUEST, GET_CUSTOMER_INFO_SUCCESS, GetCustomerInfoFailure, GetCustomerInfoSuccess, GetCustomerInfoType } from "../types/customerActionTypes";
 import axios from "axios";
+import { CustomerResponse, UserResponse } from "../models/UserResponse";
 
 const fetchCustomerInfoRequest = (): GetCustomerInfoType => {
   return {
@@ -25,8 +26,8 @@ const fetchCustomerInfoFailure = (response: GetCustomerInfoFailure): GetCustomer
 export const fetchCustomerInfo = () => {
   return (dispatch: Dispatch) => {
     dispatch(fetchCustomerInfoRequest());
-    axios.get<GetCustomerInfoSuccess>('/userAccounts/createCustomer',{ withCredentials: true }).then((response) => {
-      return dispatch(fetchCustomerInfoSuccess(response.data));
+    axios.get<CustomerResponse>('/userAccounts/createCustomer',{ withCredentials: true }).then((response) => {
+      dispatch(fetchCustomerInfoSuccess(response.data));
     }).catch(error => dispatch(fetchCustomerInfoFailure(error.message)))
   }
 }

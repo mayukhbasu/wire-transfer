@@ -1,3 +1,4 @@
+import { Customer } from "../models/Customer";
 import { UserResponse } from "../models/UserResponse";
 
 export const GET_CUSTOMER_INFO_REQUEST = 'GET_CUSTOMER_INFO_REQUEST';
@@ -6,7 +7,7 @@ export const GET_CUSTOMER_INFO_FAILURE = 'GET_CUSTOMER_INFO_FAILURE';
 
 
 export interface GetCustomerInfoSuccess {
-  response: UserResponse;
+  data: Customer[];
 }
 
 export interface GetCustomerInfoFailure {

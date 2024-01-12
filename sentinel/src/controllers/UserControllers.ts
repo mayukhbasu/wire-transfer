@@ -34,8 +34,9 @@ export class UserController {
       logger.info("Fetching customer and accounts");
       const userName = req.user?.displayName;
       const accounts = await this.userService.getCustomerAccount(userName);
+      console.log(accounts.data)
       logger.info("Response has been sent successfully");
-      res.send(accounts);
+      res.send(accounts.data);
     } catch(err) {
       
       logger.error("Error while sending response");

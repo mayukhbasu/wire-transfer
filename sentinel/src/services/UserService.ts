@@ -51,7 +51,8 @@ export class UserService {
     try {
         let query = { fullName: displayName };
         const customers = await Customer.find(query).populate('accountIds').exec();
-        return { fullName: displayName, data: customers, error: null };
+        logger.info(customers);
+        return {data: customers, error: null};
     } catch (error) {
         console.error("An error occurred while fetching customer accounts:", error);
         return { data: [], error: "An error occurred while fetching customer accounts" };

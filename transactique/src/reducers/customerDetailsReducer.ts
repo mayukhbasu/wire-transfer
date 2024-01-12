@@ -3,7 +3,6 @@ import { GET_CUSTOMER_INFO_FAILURE, GET_CUSTOMER_INFO_REQUEST, GET_CUSTOMER_INFO
 
 const initialState: UserResponse = {
   loading: false,
-  fullName: "",
   data: [],
   error: null
 }
@@ -27,7 +26,7 @@ const customerDetailsReducer = (state = initialState, action: GetCustomerInfoTyp
         ...state,
         loading: false,
         data: [],
-        error: action.payload
+        error: action.payload.message
       }
     default:
       return state
