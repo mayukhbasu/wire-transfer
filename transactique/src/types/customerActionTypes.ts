@@ -1,5 +1,4 @@
 import { Customer } from "../models/Customer";
-import { UserResponse } from "../models/UserResponse";
 
 export const GET_CUSTOMER_INFO_REQUEST = 'GET_CUSTOMER_INFO_REQUEST';
 export const GET_CUSTOMER_INFO_SUCCESS = 'GET_CUSTOMER_INFO_SUCCESS';

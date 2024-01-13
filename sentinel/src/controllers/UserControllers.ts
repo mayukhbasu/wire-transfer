@@ -14,6 +14,7 @@ export class UserController {
     try {
       logger.info("Starting to create new customer and account");
       const fullName = req.user?.displayName;
+      console.log("Full name is ", fullName)
       const userId = req.user?.id;
       const result = await this.userService.createCustomerAccount({fullName, userId});
       if(!result.success) {
@@ -32,7 +33,8 @@ export class UserController {
   public async getUserAccounts(req: Request, res: Response): Promise<void> {
     try {
       logger.info("Fetching customer and accounts");
-      const userName = req.user?.displayName;
+      const userName = req.user?.id;;
+      console.log("Full name is ", userName)
       const accounts = await this.userService.getCustomerAccount(userName);
       console.log(accounts.data)
       logger.info("Response has been sent successfully");

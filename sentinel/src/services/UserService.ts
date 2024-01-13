@@ -5,6 +5,7 @@ import { MongoClient, MongoServerError, ObjectId } from 'mongodb';
 import Account, { AccountType } from "../models/Accounts";
 import Customer, { CustomerType } from "../models/Customer";
 import logger from '../logger';
+import mongoose from 'mongoose';
 
 
 interface BalanceUpdateInfo {
@@ -22,6 +23,7 @@ export class UserService {
         ...userData,
         user: userData.userId
       });
+      console.log("user ID is ", userData.userId);
       await customer.save();
       const defaultAccount = new Account({
         balance: 0,
@@ -29,7 +31,7 @@ export class UserService {
         type: AccountType.Savings
       });
       await defaultAccount.save();
-      console.log(defaultAccount._id);
+      console.log("Default account is ", defaultAccount._id);
       customer.accountIds.push(defaultAccount._id);
       await customer.save();
       return {success: true, error: null};
@@ -43,15 +45,37 @@ export class UserService {
     
   }
 
-  async getCustomerAccount(displayName: string | undefined): Promise<{ fullName?: string, data: CustomerType[], error?: string | null }> {
-    if (!displayName) {
+  async getCustomerAccount(userId: string | undefined): Promise<{ fullName?: string, data: CustomerType[], error?: string | null }> {
+    if (!userId) {
         return {data: [], error: "Display name is undefined" };
     }
 
     try {
-        let query = { fullName: displayName };
-        const customers = await Customer.find(query).populate('accountIds').exec();
-        logger.info(customers);
+        let query = { user: new mongoose.Types.ObjectId(userId) };
+        const customers = await Customer.aggregate([
+          {
+              $match: query // Your existing query conditions
+          },
+          {
+              $lookup: {
+                  from: "users",
+                  localField: "user",
+                  foreignField: "_id",
+                  as: "userInfo"
+              }
+          },
+          {
+              $unwind: "$userInfo"
+          },
+          {
+              $project: {
+                  _id: 0, // Exclude the _id field of the top-level document
+                  accountIds: 1, // Include the accountIds field
+                  displayName: "$userInfo.displayName" // Include the displayName from the users collection
+              }
+          }
+      ]).exec();
+      logger.info(customers);
         return {data: customers, error: null};
     } catch (error) {
         console.error("An error occurred while fetching customer accounts:", error);

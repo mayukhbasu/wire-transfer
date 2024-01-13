@@ -4,11 +4,11 @@ import { useDispatch } from '../../hooks/useDispatch';
 import { useSelector } from 'react-redux';
 import { Customer } from '../../models/Customer';
 import { RootState } from '../../reducers';
-import { CustomerResponse, UserResponse } from '../../models/UserResponse';
+import { CustomerResponse} from '../../models/UserResponse';
 
 const HomePage = () => {
   const dispatch = useDispatch();
-  const [customerData, setCustomerData] = useState<Customer[] | null>(null);;
+  const [customerData, setCustomerData] = useState<Customer[] | null>(null);
 
   const customerInfo = useSelector((state: RootState) => (state.customer as CustomerResponse).data);
   useEffect(() => {
