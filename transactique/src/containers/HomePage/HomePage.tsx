@@ -2,18 +2,15 @@ import { useEffect, useState } from 'react';
 import { fetchCustomerInfo } from '../../actions/customer-actions';
 import { useDispatch } from '../../hooks/useDispatch';
 import { useSelector } from 'react-redux';
-import { Customer, CustomerResponse } from '../../models/Customer';
+import { Customer } from '../../models/Customer';
 import { RootState } from '../../reducers';
-//import { CustomerResponse} from '../../models/UserResponse';
 
 const HomePage = () => {
   const dispatch = useDispatch();
   const [customerData, setCustomerData] = useState<Customer[] | null>(null);
 
-  const customerInfo = useSelector((state: RootState) => {
-    return (state.customer.data)
-  });
-  console.log(customerInfo)
+  const customerInfo = useSelector((state: RootState) => state.customer.data);
+  
   useEffect(() => {
     dispatch(fetchCustomerInfo());
   }, [dispatch]);
