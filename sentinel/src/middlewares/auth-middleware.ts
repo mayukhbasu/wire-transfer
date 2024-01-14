@@ -3,7 +3,7 @@ import logger from '../logger';
 
 export const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
   logger.info(req.isAuthenticated());
-  
+  console.log("Middleware issues");
   if (req.isAuthenticated()) {
     return next();
   }
