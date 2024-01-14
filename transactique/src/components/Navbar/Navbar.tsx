@@ -1,23 +1,28 @@
 import './Navbar.css'
-import { Link } from 'react-router-dom';
-
+import { Link, useHistory } from 'react-router-dom';
+import axios from 'axios';
 
 const Navbar = () => {
+  const history = useHistory();
+  const handleLogout = async() => {
+    try {
+      await axios.get('/auth/logout');
+      history.push('/login');
+    }catch (error) {
+      console.error('Logout failed:', error);
+    }
+  }
   return (
     <div>
       <nav className='container-fluid'>
         <ul>
           <li>
-            <li><Link to="/home"><strong className='nav-logo'>MoneyTrans</strong></Link>
-            
-            </li>
+            <Link to="/home"><strong className='nav-logo'>MoneyTrans</strong></Link>
           </li>
         </ul>
         <ul>
-        
-            
-            <li><Link to="/transfer">Transfer Funds</Link></li>
-            <li><Link to="/transfer">Logout</Link></li>
+            <Link to="/transfer"><li>Transfer Funds</li></Link>
+            <li onClick={handleLogout}>Logout</li>
         </ul>
       </nav>
     </div>

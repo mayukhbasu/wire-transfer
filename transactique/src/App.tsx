@@ -8,7 +8,10 @@ import FundTransfer from './containers/FundTransfer/FundTransfer';
 function App() {
   return (
     <Router>
-      <Navbar/>
+      <Route render={({location}) => (
+        location.pathname !== '/' && location.pathname !== '/login' && <Navbar/>
+      )}></Route>
+      
       <Switch>
         <Route path="/" exact component={LoginPage} />  
         <Route path="/login" component={LoginPage} />

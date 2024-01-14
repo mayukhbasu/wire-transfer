@@ -26,4 +26,25 @@ router.get('/google/callback',
   }
 );
 
+router.get('/logout', (req: Request, res: Response, next: NextFunction) => {
+  req.logout((err) => {
+    if (err) { 
+      logger.error('Error during logout:', err);
+      return next(err); 
+    }
+
+    // Clear the session cookie
+    if (req.session) {
+      req.session.destroy((err) => {
+        if (err) {
+          logger.error('Error destroying session:', err);
+          return next(err);
+        }
+      });
+    }
+    logger.info('User logged out successfully');
+    res.json({ message: 'Logged out successfully' });
+  });
+})
+
 export default router;

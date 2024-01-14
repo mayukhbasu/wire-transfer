@@ -25,13 +25,13 @@ ul {
 }
 li {
   margin: 0 15px;
-}
-a {
-  color: white;
+  cursor: pointer;
   text-decoration: none;
+  color: white;
   transition: color 0.3s ease;
 }
-a:hover, a:focus {
+
+li:hover, li:focus {
   color: #4CAF50;
   text-decoration: none;
 }
