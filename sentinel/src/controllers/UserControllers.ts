@@ -35,9 +35,9 @@ export class UserController {
       const customerID = req.user?.id;
       logger.info("Full name is ", customerID)
       const accounts = await this.userService.getCustomerAccount(customerID);
-      logger.info(accounts.data)
+      logger.info(accounts)
       logger.info("Response has been sent successfully");
-      res.send(accounts.data);
+      res.send(accounts);
     } catch(err) {
       
       logger.error("Error while sending response");
@@ -72,14 +72,14 @@ export class UserController {
       const updateBalance = await this.userService.addBalanceToIndividualAccount(customerID as string, req.body);
       if(updateBalance.success) {
         logger.info("balance has been updated successfully");
-        return res.send({success: true})
+        return res.send({success: true, message: 'balance has been updated successfully'})
       } else {
-        return res.send({success: false})
+        return res.send({success: false, message: 'error updating balance'})
       }
       
     } catch(err) {
       logger.error(`An error occurred ${err}`);
-      return res.send({success: false})
+      return res.send({success: false, message: err})
     }
     
   }

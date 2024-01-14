@@ -11,6 +11,7 @@ export interface GetCustomerInfoSuccess {
 
 export interface GetCustomerInfoFailure {
   message: string;
+  success?: boolean;
 }
 
 interface CustomerInfoRequest {

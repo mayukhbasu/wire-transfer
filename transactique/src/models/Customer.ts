@@ -1,9 +1,12 @@
 import { Account } from "./Account";
 
 export interface Customer {
-  _id: string;
-  fullName: string;
-  accountIds: Account[];
-  user: string;
-  __v: number;
+  displayName: string;
+  accounts: Account[]
+}
+
+export interface CustomerResponse {
+  loading?: boolean;
+  data: Customer[];
+  error?: string | null | undefined;
 }

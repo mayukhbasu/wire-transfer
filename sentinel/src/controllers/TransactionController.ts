@@ -24,13 +24,13 @@ export class TransactionController {
     try {
       logger.info("Initiated transaction");
       if (!req.user?.id) {
-        return res.status(400).json({ message: 'User ID is missing' });
+        return res.status(400).json({ message: 'User ID is missing', success: false });
       }
 
       // Find the customer ID based on the user's ID
       const customerId = await this.transactionService.findCustomerId(req.user.id);
       if (!customerId) {
-        return res.status(404).json({ message: 'Customer not found' });
+        return res.status(404).json({ message: 'Customer not found', success: false });
       }
       logger.info(`Customer Id is ${customerId}`);
 
@@ -50,7 +50,7 @@ export class TransactionController {
       return res.status(201).json(transaction);
     } catch (err) {
       logger.error('Error in startTransaction:', err);
-      return res.status(500).json({ message: 'Internal Server Error' });
+      return res.status(500).json({ message: 'Internal Server Error', err });
     }
   }
 

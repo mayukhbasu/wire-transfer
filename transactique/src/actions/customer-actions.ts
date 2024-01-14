@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 import { GET_CUSTOMER_INFO_FAILURE, GET_CUSTOMER_INFO_REQUEST, GET_CUSTOMER_INFO_SUCCESS, GetCustomerInfoFailure, GetCustomerInfoSuccess, GetCustomerInfoType } from "../types/customerActionTypes";
 import axios from "axios";
-import { CustomerResponse} from "../models/UserResponse";
+import {CustomerResponse } from "../models/Customer";
 
 const fetchCustomerInfoRequest = (): GetCustomerInfoType => {
   return {

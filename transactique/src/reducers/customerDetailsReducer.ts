@@ -1,7 +1,7 @@
-import { UserResponse } from "../models/UserResponse";
+import { CustomerResponse } from "../models/Customer";
 import { GET_CUSTOMER_INFO_FAILURE, GET_CUSTOMER_INFO_REQUEST, GET_CUSTOMER_INFO_SUCCESS, GetCustomerInfoType } from "../types/customerActionTypes";
 
-const initialState: UserResponse = {
+const initialState: CustomerResponse = {
   loading: false,
   data: [],
   error: null
@@ -18,7 +18,7 @@ const customerDetailsReducer = (state = initialState, action: GetCustomerInfoTyp
       return {
         ...state,
         loading: false,
-        data: action.payload,
+        data: action.payload.data,
         error: null
       }
     case GET_CUSTOMER_INFO_FAILURE:
