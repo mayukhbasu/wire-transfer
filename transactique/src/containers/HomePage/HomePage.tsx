@@ -10,10 +10,8 @@ import './HomePage.css';
 const HomePage = () => {
   const dispatch = useDispatch();
   const [customerData, setCustomerData] = useState<Customer[] | null>(null);
-  const [displayName, setDisplayName] = useState('');
-
   const customerInfo = useSelector((state: RootState) => state.customer.data);
-  const customerName = useSelector((state: RootState) => state.customer)
+  
   useEffect(() => {
     dispatch(fetchCustomerInfo());
   }, [dispatch]);
@@ -26,7 +24,7 @@ const HomePage = () => {
     <div className='account-details'>
       {
         customerData && customerData.length > 0 && (
-          <AccountDetails accounts={customerData[0].accounts}/>
+          <AccountDetails displayName={customerData[0].displayName} accounts={customerData[0].accounts}/>
         )
       }
     </div>

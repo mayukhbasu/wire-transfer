@@ -6,12 +6,15 @@ type AccountDetailsProps = {
     id: string;
     type: string;
     balance: number;
-  }[]
-}
-const AccountDetails: React.FC<AccountDetailsProps> = ({accounts}) => {
+  }[],
+  displayName: string;
+};
+
+
+const AccountDetails: React.FC<AccountDetailsProps> = ({accounts, displayName}) => {
   return (
     <>
-    <h2>Welcome</h2>
+    <h2>Welcome {displayName} </h2>
     <div className="account-details">
       {
         accounts.map((account, index) => (
