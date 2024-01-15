@@ -1,0 +1,31 @@
+  .account-details {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .account-card {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
+    padding: 10px 20px;
+    width: 300px;
+    border-radius: 8px;
+  }
+
+  .account-details .account-card h3 {
+    color: #333;
+    margin-bottom: 10px;
+  }
+
+  .account-details .account-card .account-number {
+    font-size: 0.9em;
+    color: #666;
+  }
+  
+  .account-details .account-card .balance {
+    font-size: 1.2em;
+    color: #333;
+    font-weight: bold;
+  }
+
