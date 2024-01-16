@@ -10,3 +10,6 @@ export interface CustomerResponse {
   data: Customer[];
   error?: string | null | undefined;
 }
+
+
+ 
