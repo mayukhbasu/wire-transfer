@@ -33,10 +33,10 @@ export const createCustomer = () => {
     } catch(error) {
       if (typeof error === 'object' && error !== null && 'message' in error) {
         // Assuming the error object has a 'message' property
-        dispatch(createCustomerFailure({ message: (error as { message: string }).message }));
+        dispatch(createCustomerFailure({ error: (error as { message: string }).message }));
       } else {
         // Handle unexpected error format
-        dispatch(createCustomerFailure({ message: 'An unexpected error occurred' }));
+        dispatch(createCustomerFailure({ error: 'An unexpected error occurred' }));
       }
     }
   }

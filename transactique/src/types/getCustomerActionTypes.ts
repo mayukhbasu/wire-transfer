@@ -16,7 +16,6 @@ export interface GetCustomerInfoFailure {
 
 interface CustomerInfoRequest {
   type: typeof GET_CUSTOMER_INFO_REQUEST;
-
 }
 
 interface CustomerInfoSuccess {

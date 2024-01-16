@@ -1,13 +1,13 @@
 export const CREATE_CUSTOMER_INFO_REQUEST = 'CREATE_CUSTOMER_INFO_REQUEST';
-export const CREATE_CUSTOMER_INFO_SUCSESS = 'CREATE_CUSTOMER_INFO_REQUEST';
-export const CREATE_CUSTOMER_INFO_FAILURE = 'CREATE_CUSTOMER_INFO_REQUEST';
+export const CREATE_CUSTOMER_INFO_SUCSESS = 'CREATE_CUSTOMER_INFO_SUCCESS';
+export const CREATE_CUSTOMER_INFO_FAILURE = 'CREATE_CUSTOMER_INFO_FAILURE';
 
 export interface CreateCustomerSuccess {
   message: string;
 }
 
 export interface CreateCustomerFailure {
-  message: string;
+  error: string;
 }
 
 interface CreateCustomerActionRequest {

@@ -7,7 +7,7 @@ const initialState: CustomerResponse = {
   error: null
 }
 
-const customerDetailsReducer = (state = initialState, action: GetCustomerInfoType) => {
+const customerDetailsReducer = (state = initialState, action: GetCustomerInfoType):CustomerResponse => {
   switch(action.type) {
     case GET_CUSTOMER_INFO_REQUEST:
       return {

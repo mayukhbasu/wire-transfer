@@ -1,12 +1,16 @@
+import { createCustomer } from '../../actions/create-account-actions';
+import { useDispatch } from '../../hooks/useDispatch';
 import './AccountModal.css';
 const AccountModal = () => {
+
+  const dispatch = useDispatch();
 
   const closeModal = () => {
 
   }
 
   const createAccount = () => {
-
+    dispatch(createCustomer())
   }
 
   const cancelAccount = () => {
