@@ -1,5 +1,5 @@
 import { CustomerResponse } from "../models/Customer";
-import { GET_CUSTOMER_INFO_FAILURE, GET_CUSTOMER_INFO_REQUEST, GET_CUSTOMER_INFO_SUCCESS, GetCustomerInfoType } from "../types/customerActionTypes";
+import { GET_CUSTOMER_INFO_FAILURE, GET_CUSTOMER_INFO_REQUEST, GET_CUSTOMER_INFO_SUCCESS, GetCustomerInfoType } from "../types/getCustomerActionTypes";
 
 const initialState: CustomerResponse = {
   loading: false,

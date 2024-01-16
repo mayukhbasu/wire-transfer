@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modal Example</title>
+  <style>
+    .modal-background {
+      position:fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      visibility: hidden; /* Hide by default, use JavaScript to toggle */
+      opacity: 0;
+      transition: visibility 0s, opacity 0.5s;
+    }
+    .modal-background.active {
+      visibility: visible;
+      opacity: 1;
+    }
+
+.modal {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+}
+
+.modal h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.modal button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.modal button:hover {
+  background-color: #0056b3;
+}
+
+.modal .close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+  </style>
+</head>
+<body>
+<div class="modal-background" id="modalBackground">
+  <div class="modal">
+    <button class="close-modal" onclick="closeModal()">×</button>
+    <h2>Would you like to create a new Account?</h2>
+    <button onclick="createAccount()">Yes, create account</button>
+    <button onclick="closeModal()">No,
+maybe later</button>
+
+  </div>
+</div>
+<script>
+  // JavaScript functions to open and close the modal
+  function openModal() {
+    document.getElementById('modalBackground').classList.add('active');
+  }
+
+  function closeModal() {
+    document.getElementById('modalBackground').classList.remove('active');
+  }
+
+  // Placeholder function for create account action
+  function createAccount() {
+    // Implementation for creating an account goes here
+    alert('Account creation process...');
+    closeModal();
+  }
+
+  // Call openModal to show the modal when needed
+   openModal(); // Uncomment this line to open the modal when the page loads
+</script>
+</body>
+</html>

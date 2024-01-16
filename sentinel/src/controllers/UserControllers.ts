@@ -16,6 +16,7 @@ export class UserController {
       const fullName = req.user?.displayName;
       console.log("Full name is ", fullName)
       const userId = req.user?.id;
+      
       const result = await this.userService.createCustomerAccount({fullName, userId});
       if(!result.success) {
         console.error('Error creating customer:', result.error);
