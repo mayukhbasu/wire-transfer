@@ -1,6 +1,7 @@
 import { createCustomer } from '../../actions/create-account-actions';
+import { fetchCustomerInfo } from '../../actions/get-customer-actions';
 import { useDispatch } from '../../hooks/useDispatch';
-import './AccountModal.css';
+import styles from './AccountModal.module.css';
 const AccountModal = () => {
 
   const dispatch = useDispatch();
@@ -10,7 +11,9 @@ const AccountModal = () => {
   }
 
   const createAccount = () => {
-    dispatch(createCustomer())
+    dispatch(createCustomer(() => {
+      dispatch(fetchCustomerInfo())
+    }))
   }
 
   const cancelAccount = () => {

@@ -7,11 +7,13 @@ import { RootState } from '../../reducers';
 import AccountDetails from '../../components/AccountDetails/AccountDetails';
 import './HomePage.css';
 import AccountModal from '../../components/AccountModal/AccountModal';
+import AccountCreationModal from '../../components/AccountCreationModal/AccountCreationModal';
 
 const HomePage = () => {
   const dispatch = useDispatch();
   const [customerData, setCustomerData] = useState<Customer[] | null>(null);
   const customerInfo = useSelector((state: RootState) => state.customer.data);
+  const [addNewAccountFlag, setAddNewAccountFlag] = useState(false);
   
   useEffect(() => {
     dispatch(fetchCustomerInfo());
@@ -22,27 +24,32 @@ const HomePage = () => {
     setCustomerData(customerInfo);
   }, [customerInfo]);
 
+  const addNewAccount = () => {
+    setAddNewAccountFlag(!addNewAccountFlag);
+  }
+
   const renderAccountSection = () => {
     if(customerData && customerData.length > 0) {
       return (
-        <AccountDetails displayName={customerData[0].displayName} accounts={customerData[0].accounts}/>
+        <>
+          <AccountDetails displayName={customerData[0].displayName} 
+          accounts={customerData[0].accounts}/>
+          <button onClick={addNewAccount}>Add new account</button>
+        </>
       )
     } else if(customerData && customerData.length === 0) {
-      console.log(customerData)
       return (
         <>
           <AccountModal/>
+          
         </>
-        
-      )
-      //alert("Would you like to create a new Account?")
+      )      
     }
   }
   return (
     <>
-      <div className='account-details'>
-        {renderAccountSection()}
-      </div>
+      {renderAccountSection()}
+      {addNewAccountFlag && <AccountCreationModal/>}
     </>
     
   )

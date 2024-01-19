@@ -1,9 +1,9 @@
-import AccountModal from "../../components/AccountModal/AccountModal";
+import AccountCreationModal from "../../components/AccountCreationModal/AccountCreationModal";
 
 const FundTransfer = () => {
   return (
     <div>
-      <AccountModal/>
+      
     </div>
   );
 };

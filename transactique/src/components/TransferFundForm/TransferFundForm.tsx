@@ -1,5 +1,5 @@
-import React from 'react';
-import AccountModal from '../AccountModal/AccountModal';
+
+import AccountCreationModal from '../AccountCreationModal/AccountCreationModal';
 
 const TransferFundForm = () => {
   return (

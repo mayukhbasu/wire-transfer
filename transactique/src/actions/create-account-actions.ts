@@ -24,12 +24,15 @@ const createCustomerFailure = (response: CreateCustomerFailure): CreateCustomerT
   }
 }
 
-export const createCustomer = () => {
+export const createCustomer = (callback: () => void) => {
   return async (dispatch: Dispatch) => {
     dispatch(createCustomerRequest());
     try {
       const response = await axios.post('/userAccounts/createCustomer',{ withCredentials: true })
       dispatch(createCustomerSuccess(response.data));
+      if(callback) {
+        callback();
+      }
     } catch(error) {
       if (typeof error === 'object' && error !== null && 'message' in error) {
         // Assuming the error object has a 'message' property

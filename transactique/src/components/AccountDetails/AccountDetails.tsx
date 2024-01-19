@@ -14,7 +14,7 @@ type AccountDetailsProps = {
 const AccountDetails: React.FC<AccountDetailsProps> = ({accounts, displayName}) => {
   return (
     <>
-    <h2>Welcome {displayName} </h2>
+    <h3 style={{marginTop:'70px', marginLeft:'40px'}}>Welcome, {displayName} </h3>
     <div className="account-details">
       {
         accounts.map((account, index) => (

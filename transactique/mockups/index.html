@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Modal Example</title>
+  <title>Account Type Modal</title>
   <style>
     .modal-background {
-      position:fixed;
+      position: fixed;
       top: 0;
       left: 0;
       right: 0;
@@ -15,42 +15,54 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      visibility: hidden; /* Hide by default, use JavaScript to toggle */
-      opacity: 0;
+      
       transition: visibility 0s, opacity 0.5s;
     }
+
     .modal-background.active {
       visibility: visible;
       opacity: 1;
     }
 
-.modal {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  max-width: 500px;
-  width: 100%;
-}
+    .modal {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 300px;
+    }
 
-.modal h2 {
-  margin-top: 0;
-  color: #333;
-}
+    .modal h2 {
+      color: #333;
+      text-align: center;
+    }
 
-.modal button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
+    .modal form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal label {
+      margin: 10px 0 5px;
+    }
+
+    .modal input[type="radio"] {
+      margin-right: 5px;
+    }
+
+    .modal button {
+      padding: 10px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
 
 .modal button:hover {
-  background-color: #0056b3;
+  background-color: #45a049;
 }
 
 .modal .close-modal {
@@ -60,6 +72,7 @@
   border: none;
   background: transparent;
   cursor: pointer;
+  font-size: 1.5rem;
 }
   </style>
 </head>
@@ -67,15 +80,25 @@
 <div class="modal-background" id="modalBackground">
   <div class="modal">
     <button class="close-modal" onclick="closeModal()">×</button>
-    <h2>Would you like to create a new Account?</h2>
-    <button onclick="createAccount()">Yes, create account</button>
-    <button onclick="closeModal()">No,
-maybe later</button>
-
+    <h2>Add Account</h2>
+    <form id="account-form">
+      <label for="savings-account">
+        <input type="radio" id="savings-account" name="account-type" value="Savings" checked>
+        Savings Account
+      </label>
+      <label for="current-account">
+        <input type="radio" id="current-account" name="account-type" value="Current">
+        Current Account
+      </label>
+      <label for="investment-account">
+        <input type="radio" id="investment-account" name="account-type" value="Investment">
+        Investment Account
+      </label>
+      <button type="submit" onclick="addAccount()">Add Account</button>
+    </form>
   </div>
 </div>
 <script>
-  // JavaScript functions to open and close the modal
   function openModal() {
     document.getElementById('modalBackground').classList.add('active');
   }
@@ -84,15 +107,15 @@ maybe later</button>
     document.getElementById('modalBackground').classList.remove('active');
   }
 
-  // Placeholder function for create account action
-  function createAccount() {
-    // Implementation for creating an account goes here
-    alert('Account creation process...');
+  function addAccount() {
+    // Placeholder function for adding an account
+    // You would put your logic here to handle the actual account creation
+    alert('Account added!');
     closeModal();
   }
 
   // Call openModal to show the modal when needed
-   openModal(); // Uncomment this line to open the modal when the page loads
+  // openModal(); // Uncomment this line to open the modal when the page loads
 </script>
 </body>
 </html>
