@@ -21,9 +21,9 @@ const AccountModal = () => {
   }
 
   return (
-    <div className='modal-background' id="modalBackground">
-      <div className='modal'>
-      <button className="close-modal" onClick={closeModal}>×</button>
+    <div className={styles.modalBackground} id="modalBackground">
+      <div className={styles.modal}>
+      <button className={styles.closeModal} onClick={closeModal}>×</button>
       <h4>Would you like to create a new Account?</h4>
       <button onClick={createAccount}>Yes, create account</button>
       <button onClick={cancelAccount}>No,maybe later</button>

@@ -28,7 +28,7 @@ const HomePage = () => {
     //Update local state when the Redux store's state changes
     setCustomerData(customerInfo);
     setAvailableAccounts(availableAccountsInfo)
-  }, [customerInfo]);
+  }, [customerInfo, availableAccountsInfo]);
 
   const addNewAccount = () => {
     setAddNewAccountFlag(!addNewAccountFlag);

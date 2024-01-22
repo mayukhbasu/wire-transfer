@@ -1,6 +1,5 @@
 import { AvailableAccountsResponse } from "../models/Account";
 import { AvailableAccountsType, GET_AVAILABLE_ACCOUNTS_FAILURE, GET_AVAILABLE_ACCOUNTS_REQUEST, GET_AVAILABLE_ACCOUNTS_SUCCESS } from "../types/getAvailableAccountsActionTypes";
-import { GET_CUSTOMER_INFO_REQUEST } from "../types/getCustomerActionTypes";
 
 const initialState: AvailableAccountsResponse = {
   loading: false,
