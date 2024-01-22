@@ -26,7 +26,9 @@ export const fetchAvailableAccounts = () => {
   return (dispatch: Dispatch) => {
     dispatch(fetchAvailableAccountsRequest())
     axios.get('/userAccounts/getAvailableAccounts',{ withCredentials: true })
-    .then(response => fetchAvailableAccountsSuccess(response.data))
-    .catch(err => fetchAvailableAccountsFailure(err))
+    .then(response => {
+      return dispatch(fetchAvailableAccountsSuccess(response.data))
+    })
+    .catch(err => dispatch(fetchAvailableAccountsFailure(err)))
   }
 }

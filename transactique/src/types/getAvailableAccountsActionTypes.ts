@@ -1,11 +1,11 @@
-import { GetAvailableAccounts } from "../models/Account";
-
 export const GET_AVAILABLE_ACCOUNTS_REQUEST = 'GET_AVAILABLE_ACCOUNTS_REQUEST';
 export const GET_AVAILABLE_ACCOUNTS_SUCCESS = 'GET_AVAILABLE_ACCOUNTS_SUCCESS';
 export const GET_AVAILABLE_ACCOUNTS_FAILURE = 'GET_AVAILABLE_ACCOUNTS_FAILURE';
 
 export interface GetAvailableAccountsSuccess {
-  response: GetAvailableAccounts;
+  success: boolean;
+  message: string;
+  data: string[];
 }
 
 export interface GetAvailableAccountsFailure {

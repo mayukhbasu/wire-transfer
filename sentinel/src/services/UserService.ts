@@ -110,9 +110,9 @@ export class UserService {
     }
   }
 
-  async getAccountType(userName: string | undefined, accountType: AccountType): Promise<boolean> {
+  async getAccountType(googleId: string | undefined, accountType: AccountType): Promise<boolean> {
     try {
-      const customer = await Customer.findOne({user: new mongoose.Types.ObjectId(userName)});
+      const customer = await Customer.findOne({googleId: googleId});
       logger.info("customer is ", customer);
       if(!customer) {
         return false;
@@ -134,20 +134,20 @@ export class UserService {
     }
   }
 
-  async createNewAccountForExistingUser(userName: string, accountType: AccountType): Promise<boolean> {
+  async createNewAccountForExistingUser(googleId: string, accountType: AccountType): Promise<boolean> {
     try {
-      logger.info("username is ", userName)
-      const customer = await Customer.findOne({user: new mongoose.Types.ObjectId(userName)});
+      logger.info("username is ", googleId)
+      const customer = await Customer.findOne({googleId: googleId});
       const newAccount = new Account({
         balance: 0,
-        customerId: customer?._id,
+        customerId: customer?.googleId,
         type: accountType,
         createdAt: new Date()
       });
       const savedAccount = await newAccount.save();
       customer?.accountIds.push(savedAccount._id);
       await customer?.save();
-      logger.info(`New ${accountType} account created for ${userName}`);
+      logger.info(`New ${accountType} account created for ${googleId}`);
       return true;
     } catch(err) {
       logger.error('Error in createNewAccountForExistingUser:', err);
