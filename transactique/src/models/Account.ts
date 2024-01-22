@@ -9,3 +9,9 @@ export interface GetAvailableAccounts {
   message: string;
   data: string[]
 }
+
+export interface AvailableAccountsResponse {
+  loading?: boolean;
+  data: GetAvailableAccounts;
+  error?: string | null | undefined;
+}
