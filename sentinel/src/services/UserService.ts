@@ -201,16 +201,17 @@ export class UserService {
     }
   }
 
-  async getAccountTypes(userID: string): Promise<Array<string>> {
+  async getAvailableAccounts(userID: string): Promise<Array<string>> {
     const actualAccountTypes: string[] = ['savings', 'current', 'investment'];
+    logger.info("USer ID",userID);
     try {
         logger.info("Started fetching account types");
 
         // Convert string userID to Mongoose ObjectId
-        const objectId = new mongoose.Types.ObjectId(userID);
+        
 
         // Fetch the accounts for the given customerId
-        const accounts = await Account.find({ customerId: objectId }, 'type -_id').exec();
+        const accounts = await Account.find({ customerId: userID}, 'type -_id').exec();
         console.log(accounts);
         // Extract the types from the accounts
         const accountTypes = accounts.map(account => account.type);

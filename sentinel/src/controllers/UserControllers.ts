@@ -132,7 +132,7 @@ export class UserController {
       if(!customerID) {
         return this.sendResponse(res, 400, { success: false, message: 'Customer does not exist'});
       }
-      const accounts = await this.userService.getAccountTypes(customerID as string);
+      const accounts = await this.userService.getAvailableAccounts(customerID as string);
       logger.info(`Accounts are ${accounts}`);
       return this.sendResponse(res, 200, { success: true, message: 'Accounts fetch successful', data: accounts});
     } catch(err) {
