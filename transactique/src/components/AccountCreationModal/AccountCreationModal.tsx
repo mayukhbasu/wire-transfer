@@ -1,18 +1,32 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import styles from  './AccountCreationModal.module.css';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../reducers';
+import { fetchAvailableAccounts } from '../../actions/available-accounts-actions';
+import { useDispatch } from '../../hooks/useDispatch';
 
 const AccountCreationModal = () => {
   const [accountType, setAccountType] = useState('Savings');
+  const [availableAccounts, setAvailableAccounts] = useState<string[]>([]);
+  const dispatch = useDispatch();
 
+  const availableAccountsInfo = useSelector((state: RootState) => state.accounts.data.data);
   const handleAccountTypeChange = (event: ChangeEvent<HTMLInputElement>) => {
     setAccountType(event.target.value);
   };
 
+  useEffect(() => {
+    dispatch(fetchAvailableAccounts())
+  }, [dispatch]);
+
+  useEffect(() => {
+    setAvailableAccounts(availableAccountsInfo)
+  }, [availableAccountsInfo])
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    
-    console.log(`Account Type Selected: ${accountType}`);
   };
+  console.log(availableAccounts);
   return (
     <div className={styles.modalBackground} id="modalBackground">
   <div className={styles.modal}>

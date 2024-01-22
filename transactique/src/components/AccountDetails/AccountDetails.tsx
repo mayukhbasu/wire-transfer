@@ -8,14 +8,11 @@ type AccountDetailsProps = {
     balance: number;
   }[],
   displayName: string;
+  onAddNewAccount: () => void
 };
 
 
-const AccountDetails: React.FC<AccountDetailsProps> = ({accounts, displayName}) => {
-
-  const addNewAccount = () => {
-
-  }
+const AccountDetails: React.FC<AccountDetailsProps> = ({accounts, displayName, onAddNewAccount}) => {
   return (
     <>
     <h3 style={{marginTop:'70px', marginLeft:'40px'}}>Welcome, {displayName} </h3>
@@ -26,7 +23,7 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({accounts, displayName}) 
         ))
         
       }
-      <button className='add-account' onClick={addNewAccount}>+</button>
+      <button className='add-account' onClick={onAddNewAccount}>+</button>
     </div>
   </>
   );

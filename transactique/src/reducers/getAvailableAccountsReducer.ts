@@ -20,6 +20,7 @@ const availableAccountsReducer = (state = initialState, action: AvailableAccount
         error: null
       }
     case GET_AVAILABLE_ACCOUNTS_SUCCESS:
+      
       return {
         ...state,
         loading: false,
