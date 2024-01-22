@@ -12,14 +12,14 @@ interface IAccount extends Document {
   _id: mongoose.Types.ObjectId;
   balance: number;
   createdAt: Date;
-  customerId: mongoose.Types.ObjectId;
+  customerId: string;
   type: AccountType;
 }
 
 const accountSchema = new mongoose.Schema<IAccount>({
   balance: { type: Number, required: true },
   createdAt: { type: Date, default: Date.now },
-  customerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Customer', required: true },
+  customerId: { type: String, ref: 'Customer', required: true },
   type: { type: String, enum: Object.values(AccountType), required: true }
 });
 

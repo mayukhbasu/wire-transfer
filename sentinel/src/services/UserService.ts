@@ -18,21 +18,23 @@ export class UserService {
 
   async createCustomerAccount(userData: any): Promise<{success: boolean, error? : string | null}> {
     try {
+      logger.info("User data is....")
       logger.info(userData);
       const customer = new Customer({
         ...userData,
-        user: userData.userId
+        user: userData.googleId
       });
-      console.log("user ID is ", userData.userId);
-      const checkIfUserExists = await Customer.find({user: new mongoose.Types.ObjectId(userData.userId)});
+      console.log("user ID is ", userData.googleId);
+      const checkIfUserExists = await Customer.find({googleId: userData.googleId});
       console.log("Checking if user exists ", checkIfUserExists);
       if(checkIfUserExists.length) {
         return { success: false, error: "A customer with the same full name already exists." }; 
       }
       await customer.save();
+      logger.info(`Google ID is ${customer.googleId}`)
       const defaultAccount = new Account({
         balance: 0,
-        customerId: customer.id,
+        customerId: customer.googleId,
         type: AccountType.Savings
       });
       await defaultAccount.save();
@@ -50,13 +52,16 @@ export class UserService {
     
   }
 
-  async getCustomerAccount(userId: string | undefined): Promise<{ fullName?: string, data: CustomerType[], error?: string | null }> {
+  async getCustomerAccount(userId: string | undefined): Promise<CustomerType[] | undefined> {
     if (!userId) {
-        return {data: [], error: "Display name is undefined" };
+        return [];
     }
 
     try {
-        let query = { user: new mongoose.Types.ObjectId(userId) };
+        let query = { googleId: userId };
+        const accounts = await Account.find(query);
+        console.log("Accounts are....")
+        
         const customers = await Customer.aggregate([
           {
               $match: query // Your existing query conditions
@@ -64,8 +69,8 @@ export class UserService {
           {
               $lookup: {
                   from: "users",
-                  localField: "user",
-                  foreignField: "_id",
+                  localField: "googleId",
+                  foreignField: "googleId",
                   as: "userInfo"
               }
           },
@@ -98,12 +103,10 @@ export class UserService {
               }
           }
       ]).exec();
-      
-      logger.info(customers);
-        return {data: customers, error: null};
+      return customers;
     } catch (error) {
         console.error("An error occurred while fetching customer accounts:", error);
-        return { data: [], error: "An error occurred while fetching customer accounts" };
+        return []
     }
   }
 
@@ -197,4 +200,32 @@ export class UserService {
       return 0;
     }
   }
+
+  async getAccountTypes(userID: string): Promise<Array<string>> {
+    const actualAccountTypes: string[] = ['savings', 'current', 'investment'];
+    try {
+        logger.info("Started fetching account types");
+
+        // Convert string userID to Mongoose ObjectId
+        const objectId = new mongoose.Types.ObjectId(userID);
+
+        // Fetch the accounts for the given customerId
+        const accounts = await Account.find({ customerId: objectId }, 'type -_id').exec();
+        console.log(accounts);
+        // Extract the types from the accounts
+        const accountTypes = accounts.map(account => account.type);
+        logger.info(`Account Types, ${accountTypes}`);
+
+        // Filter the account types that the user doesn't have
+        const availableAccountTypes = actualAccountTypes.filter(type => !accountTypes.includes(type));
+        logger.info(`Available Account Types are, ${availableAccountTypes}`);
+
+        return availableAccountTypes;
+    } catch (error) {
+        logger.error(`Error fetching account types: ${error}`);
+        return [];
+    }
+}
+
+
 }

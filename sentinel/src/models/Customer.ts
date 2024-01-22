@@ -3,13 +3,13 @@ import mongoose from "mongoose";
 interface ICustomer extends Document {
   _id: mongoose.Types.ObjectId;
   accountIds: mongoose.Types.ObjectId[];
-  user: mongoose.Schema.Types.ObjectId;
+  googleId: string;
   __v: number;
 }
 
 const customerSchema = new mongoose.Schema<ICustomer>({
   accountIds: [{type: mongoose.Schema.ObjectId, ref: 'Account'}],
-  user: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true}
+  googleId: {type: String, ref: 'User', required: true, unique: true}
 });
 
 const Customer = mongoose.model<ICustomer>('Customer', customerSchema);
