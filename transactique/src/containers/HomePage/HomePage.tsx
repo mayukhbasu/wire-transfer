@@ -40,7 +40,7 @@ const HomePage = () => {
         <>
           <AccountDetails displayName={customerData[0].displayName} 
           accounts={customerData[0].accounts}/>
-          <button onClick={addNewAccount}>Add new account</button>
+          
         </>
       )
     } else if(customerData && customerData.length === 0) {

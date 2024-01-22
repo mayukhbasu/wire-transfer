@@ -12,6 +12,10 @@ type AccountDetailsProps = {
 
 
 const AccountDetails: React.FC<AccountDetailsProps> = ({accounts, displayName}) => {
+
+  const addNewAccount = () => {
+
+  }
   return (
     <>
     <h3 style={{marginTop:'70px', marginLeft:'40px'}}>Welcome, {displayName} </h3>
@@ -20,7 +24,9 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({accounts, displayName}) 
         accounts.map((account, index) => (
           <AccountCard key={index} account={account}/>
         ))
+        
       }
+      <button className='add-account' onClick={addNewAccount}>+</button>
     </div>
   </>
   );
