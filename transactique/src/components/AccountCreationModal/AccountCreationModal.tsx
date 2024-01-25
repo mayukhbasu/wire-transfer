@@ -38,7 +38,6 @@ const AccountCreationModal: FC<AccountCreationModalProps> = ({ onAccountCreated 
     const selectedType = formData.get('account-type');
     dispatch(createAnotherAccount(selectedType as string)).then(() => {
       onAccountCreated(); // This will be called after the account creation
-      console.log('Account created:', selectedType);
     });
   };
   return (
