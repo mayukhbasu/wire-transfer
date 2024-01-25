@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../reducers';
 import { fetchAvailableAccounts } from '../../actions/available-accounts-actions';
 import { useDispatch } from '../../hooks/useDispatch';
+import { createAnotherAccount } from '../../actions/create-other-accounts-actions';
 
 const AccountCreationModal = () => {
   const [accountType, setAccountType] = useState('');
@@ -29,6 +30,7 @@ const AccountCreationModal = () => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const selectedType = formData.get('account-type');
+    dispatch(createAnotherAccount(selectedType as string));
     console.log(selectedType);
   };
   return (

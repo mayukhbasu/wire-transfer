@@ -1,3 +1,5 @@
+import { CreateAnotherAccountSuccess } from "../types/createAnotherAccountTypes";
+
 export interface Account {
   id: string;
   type: string;
@@ -15,3 +17,10 @@ export interface AvailableAccountsResponse {
   data: GetAvailableAccounts;
   error?: string | null | undefined;
 }
+
+export interface CreateAnotherAccountResponse {
+  loading?: boolean;
+  data: CreateAnotherAccountSuccess;
+  error?: string | null | undefined;
+}
+

@@ -75,7 +75,7 @@ export class UserController {
 
     } else {
       const newAccount = await this.userService.createNewAccountForExistingUser(customerID as string, accountType);
-      return this.sendResponse(res, 200, { success: true, message: 'Account created successfully', data: newAccount });
+      return this.sendResponse(res, 200, { success: true, message: 'Account created successfully'});
     }
   }
 
