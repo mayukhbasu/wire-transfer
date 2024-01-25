@@ -1,0 +1,18 @@
+.account-card {
+  position: relative;
+  /* Add any additional styling for the card here (e.g., padding, margin, border) */
+}
+
+.add-balance {
+  position: absolute;
+  top: 10px;       /* Aligns the button to the top of the account card */
+  right: 10px;     /* Aligns the button to the right of the account card */
+  /* Add any additional styling for the button here (e.g., padding, background, border) */
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+}

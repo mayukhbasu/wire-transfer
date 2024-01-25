@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
 import styles from  './AccountCreationModal.module.css';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../reducers';
@@ -6,7 +6,12 @@ import { fetchAvailableAccounts } from '../../actions/available-accounts-actions
 import { useDispatch } from '../../hooks/useDispatch';
 import { createAnotherAccount } from '../../actions/create-other-accounts-actions';
 
-const AccountCreationModal = () => {
+
+interface AccountCreationModalProps {
+  onAccountCreated: () => void;
+}
+
+const AccountCreationModal: FC<AccountCreationModalProps> = ({ onAccountCreated }) => {
   const [accountType, setAccountType] = useState('');
   const [availableAccounts, setAvailableAccounts] = useState<string[]>([]);
   const dispatch = useDispatch();
@@ -16,6 +21,7 @@ const AccountCreationModal = () => {
   });
   const handleAccountTypeChange = (event: ChangeEvent<HTMLInputElement>) => {
     setAccountType(event.target.value);
+    console.log(accountType);
   };
 
   useEffect(() => {
@@ -30,8 +36,10 @@ const AccountCreationModal = () => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const selectedType = formData.get('account-type');
-    dispatch(createAnotherAccount(selectedType as string));
-    console.log(selectedType);
+    dispatch(createAnotherAccount(selectedType as string)).then(() => {
+      onAccountCreated(); // This will be called after the account creation
+      console.log('Account created:', selectedType);
+    });
   };
   return (
     <div className={styles.modalBackground} id="modalBackground">

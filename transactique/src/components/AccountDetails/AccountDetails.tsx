@@ -17,13 +17,14 @@ const AccountDetails: React.FC<AccountDetailsProps> = ({accounts, displayName, o
     <>
     <h3 style={{marginTop:'70px', marginLeft:'40px'}}>Welcome, {displayName} </h3>
     <div className="account-details">
+      
       {
         accounts.map((account, index) => (
           <AccountCard key={index} account={account}/>
         ))
         
       }
-      <button className='add-account' onClick={onAddNewAccount}>+</button>
+      {accounts.length < 3 && <button className='add-account' onClick={onAddNewAccount}>+</button>}
     </div>
   </>
   );

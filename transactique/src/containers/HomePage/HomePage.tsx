@@ -12,9 +12,13 @@ import AccountCreationModal from '../../components/AccountCreationModal/AccountC
 const HomePage = () => {
   const dispatch = useDispatch();
   const [customerData, setCustomerData] = useState<Customer[] | null>(null);
-
+  const [modalVisible, setModalVisible] = useState(false);
   const customerInfo = useSelector((state: RootState) => state.customer.data);
-  const [addNewAccountFlag, setAddNewAccountFlag] = useState(false);
+
+  const handleAccountCreated = () => {
+    setModalVisible(false);
+    dispatch(fetchCustomerInfo());
+  }
   
   useEffect(() => {
     dispatch(fetchCustomerInfo());
@@ -26,7 +30,7 @@ const HomePage = () => {
   }, [customerInfo]);
 
   const addNewAccount = () => {
-    setAddNewAccountFlag(!addNewAccountFlag);
+    setModalVisible(!modalVisible);
   }
   const renderAccountSection = () => {
     if(customerData && customerData.length > 0) {
@@ -48,7 +52,7 @@ const HomePage = () => {
   return (
     <>
       {renderAccountSection()}
-      {addNewAccountFlag && <AccountCreationModal/>}
+      { modalVisible && <AccountCreationModal onAccountCreated={handleAccountCreated}/>}
     </>
     
   )

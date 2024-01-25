@@ -23,11 +23,19 @@ const createAnotherAccountFailure = (response: CreateAnotherAccountFailure): Cre
 }
 
 export const createAnotherAccount = (accountType: string) => {
-  return (dispatch: Dispatch) => {
+  return (dispatch: Dispatch): Promise<any> => {
     dispatch(createAnotherAccountRequest());
-    axios.post('/userAccounts/createOtherAccounts', {accountType}).then(response => dispatch(createAnotherAccountSuccess(response.data)))
-    .catch(err => {
-      return dispatch(createAnotherAccountFailure(err))
-    })
-  }
-}
+
+    return new Promise((resolve, reject) => {
+      axios.post('/userAccounts/createOtherAccounts', { accountType })
+        .then(response => {
+          dispatch(createAnotherAccountSuccess(response.data));
+          resolve(response.data); // Resolve the promise with response data
+        })
+        .catch(err => {
+          dispatch(createAnotherAccountFailure(err));
+          reject(err); // Reject the promise with error
+        });
+    });
+  };
+};
