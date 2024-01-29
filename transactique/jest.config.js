@@ -2,9 +2,13 @@ module.exports = {
   // Specifies the Jest preset - this line sets up Jest to correctly handle TypeScript
   preset: 'ts-jest',
   transform: {
-    '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
+    "^.+\\.(ts|tsx)$": "ts-jest",
+    "^.+\\.(js|jsx)$": "babel-jest"
   },
-
+  moduleNameMapper: {
+    "^axios$": "axios/dist/node/axios.cjs"
+  },
+  moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'],
   // Automatically clear mock calls and instances between every test
   clearMocks: true,
 

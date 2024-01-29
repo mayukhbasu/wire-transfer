@@ -26,8 +26,12 @@ const fetchCustomerInfoFailure = (response: GetCustomerInfoFailure): GetCustomer
 export const fetchCustomerInfo = () => {
   return (dispatch: Dispatch) => {
     dispatch(fetchCustomerInfoRequest());
-    axios.get<CustomerResponse>('/userAccounts/createCustomer',{ withCredentials: true }).then((response) => {
-      dispatch(fetchCustomerInfoSuccess(response.data));
-    }).catch(error => dispatch(fetchCustomerInfoFailure(error.message)))
+    // Return the promise from axios.get
+    return axios.get<CustomerResponse>('/userAccounts/createCustomer', { withCredentials: true })
+      .then((response) => {
+        dispatch(fetchCustomerInfoSuccess(response.data));
+      })
+      .catch(error => dispatch(fetchCustomerInfoFailure(error.message)));
   }
-}
+};
+
