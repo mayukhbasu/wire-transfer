@@ -160,7 +160,7 @@ export class UserService {
 
   async addBalanceToIndividualAccount(userName: string, balanceAdditionInfo: BalanceUpdateInfo): Promise<{success: boolean, error?: string | undefined}> {
     try {
-      const customer = await Customer.findOne({user: new mongoose.Types.ObjectId(userName)});
+      const customer = await Customer.findOne({googleId: userName});
       
       if(!customer) {
         console.log("Customer is ", customer)

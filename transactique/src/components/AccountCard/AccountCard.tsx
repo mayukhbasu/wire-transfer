@@ -17,12 +17,13 @@ const AccountCard: React.FC<AccountProps> = ({account, addAmountToAccount}) => {
 
   const openModal = () => setIsOpenModal(true);
   
-  const handleAddFunds = () => {
-
+  const handleAddFunds = (amount: number) => {
+    setIsOpenModal(false);
+    console.log(amount);
   }
 
   const cancelAddFunds = () => {
-    setIsOpenModal(!isOpenModal);
+    setIsOpenModal(false);
   }
   
   const maskedId = useMaskAccountNumber(account.id)

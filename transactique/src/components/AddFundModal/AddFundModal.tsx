@@ -7,8 +7,13 @@ type AddFundModalProps = {
   addFunds: (amount: number) => void;
   cancelFundTransfer: () => void;
 }
-const AddFundModal: FC<AddFundModalProps> = ({accountID, cancelFundTransfer}) => {
+const AddFundModal: FC<AddFundModalProps> = ({accountID,addFunds, cancelFundTransfer}) => {
   const numericInput = useNumericInput();
+
+  const handleAddFunds = () => {
+    addFunds(Number(numericInput.value));
+  }
+  
   return (
     <div>
       <div className={styles.modalBackground} id="modalBackground">
@@ -17,7 +22,7 @@ const AddFundModal: FC<AddFundModalProps> = ({accountID, cancelFundTransfer}) =>
         <h5>Account Number: {accountID}</h5>
         <input type='text' onChange={numericInput.handleChange} value={numericInput.value} 
         placeholder='Enter amount in $'/>
-        <button>Add</button>
+        <button onClick={handleAddFunds}>Add</button>
         <button style={{backgroundColor: 'red'}} onClick={cancelFundTransfer}>Cancel</button>
       </div>
     </div>
