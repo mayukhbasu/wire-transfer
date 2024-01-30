@@ -60,7 +60,6 @@ export class UserService {
 
     try {
         let query = { googleId: userId };
-        const accounts = await Account.find(query);
         console.log("Accounts are....")
         
         const customers = await Customer.aggregate([
@@ -165,31 +164,42 @@ export class UserService {
   }
 
   async addBalanceToIndividualAccount(userName: string, balanceAdditionInfo: BalanceUpdateInfo): Promise<boolean> {
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
     try {
-      const customer = await Customer.findOne({googleId: userName});
-      
-      if(!customer) {
-        console.log("Customer is ", customer)
-        return false
-      }
-      const accounts = await Account.find({customerId: customer.googleId});
-      console.log("Accounts are ", accounts);
-      await Promise.all(accounts.map(async account => {
-        const accountType = account.type as keyof BalanceUpdateInfo;
-        const additionAmount = balanceAdditionInfo[accountType];
-        if(additionAmount) {
-          account.balance += additionAmount;
-          await account.save();
-          logger.info(`Added ${additionAmount} to ${accountType} account: ${account._id}`);
-        }
+        const customer = await Customer.findOne({ googleId: userName }).session(session);
         
-      }));
-      return true;
-    } catch(error) {
-      logger.error('Error in addBalanceToIndividualAccounts:', error);
-      return false
+        if (!customer) {
+            logger.info("Customer is ", customer)
+            await session.abortTransaction();
+            session.endSession();
+            return false;
+        }
+
+        const accounts = await Account.find({ customerId: customer.googleId }).session(session);
+        logger.info("Accounts are ", accounts);
+
+        for (let account of accounts) {
+            const accountType = account.type as keyof BalanceUpdateInfo;
+            const additionAmount = balanceAdditionInfo[accountType];
+            if (additionAmount) {
+                account.balance += additionAmount;
+                await account.save({ session });
+                logger.info(`Added ${additionAmount} to ${accountType} account: ${account._id}`);
+            }
+        }
+
+        await session.commitTransaction();
+        session.endSession();
+        return true;
+    } catch (error) {
+        await session.abortTransaction();
+        session.endSession();
+        logger.error('Error in addBalanceToIndividualAccounts:', error);
+        return false;
     }
-  }
+}
 
   async getTotalBalance(userID: string): Promise<Number> {
     try {

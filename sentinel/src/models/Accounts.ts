@@ -19,7 +19,7 @@ interface IAccount extends Document {
 const accountSchema = new mongoose.Schema<IAccount>({
   balance: { type: Number, required: true },
   createdAt: { type: Date, default: Date.now },
-  customerId: { type: String, ref: 'Customer', required: true },
+  customerId: { type: String, ref: 'Customer', required: true, index: true },
   type: { type: String, enum: Object.values(AccountType), required: true }
 });
 

@@ -4,6 +4,7 @@ import './AccountCard.css';
 import AddFundModal from "../AddFundModal/AddFundModal";
 import { useDispatch } from "../../hooks/useDispatch";
 import { updateBalance } from "../../actions/update-balance-actions";
+import { fetchCustomerInfo } from "../../actions/get-customer-actions";
 
 type AccountProps = {
   account: {
@@ -23,7 +24,7 @@ const AccountCard: React.FC<AccountProps> = ({account}) => {
   
   const handleAddFunds = (amount: number) => {
     setIsOpenModal(false);
-    dispatch(updateBalance(amount, account.type as AccountType))
+    dispatch(updateBalance(amount, account.type as AccountType)).then(dispatch(fetchCustomerInfo() as any))
   }
 
   const cancelAddFunds = () => {
