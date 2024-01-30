@@ -1,4 +1,5 @@
 import { CreateAnotherAccountSuccess } from "../types/createAnotherAccountTypes";
+import { UpdateCustomerBalanceFailure, UpdateCustomerBalanceSuccess } from "../types/updateBalanceTypes";
 
 export interface Account {
   id: string;
@@ -13,14 +14,20 @@ export interface GetAvailableAccounts {
 }
 
 export interface AvailableAccountsResponse {
-  loading?: boolean;
+  loading: boolean;
   data: GetAvailableAccounts;
-  error?: string | null | undefined;
+  error: string | null | undefined;
 }
 
 export interface CreateAnotherAccountResponse {
-  loading?: boolean;
+  loading: boolean;
   data: CreateAnotherAccountSuccess;
-  error?: string | null | undefined;
+  error: string | null | undefined;
+}
+
+export interface UpdateBalanceResponse {
+  loading: boolean;
+  data: UpdateCustomerBalanceSuccess;
+  error: UpdateCustomerBalanceFailure;
 }
 

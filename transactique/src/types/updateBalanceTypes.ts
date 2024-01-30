@@ -3,12 +3,12 @@ export const UPDATE_CUSTOMER_BALANCE_SUCCESS = 'UPDATE_CUSTOMER_BALANCE_SUCCESS'
 export const UPDATE_CUSTOMER_BALANCE_FAILURE = 'UPDATE_CUSTOMER_BALANCE_FAILURE';
 
 
-interface UpdateCustomerBalanceSuccess {
+export interface UpdateCustomerBalanceSuccess {
   success: boolean;
   message: string;
 }
 
-interface UpdateCustomerBalanceFailure {
+export interface UpdateCustomerBalanceFailure {
   success: boolean;
   message: string;
 }

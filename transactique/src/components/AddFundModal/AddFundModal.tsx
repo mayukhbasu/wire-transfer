@@ -1,4 +1,4 @@
-import React, { FC, FormEvent, useState } from 'react';
+import React, { FC} from 'react';
 import styles from './AddFundModal.module.css';
 import useNumericInput from '../../hooks/useNumericInput';
 
