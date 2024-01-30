@@ -48,7 +48,7 @@ export class UserController {
       logger.info("Fetching customer and accounts");
       const customerID = req.user?.googleId;
       logger.info("Full name is ", customerID)
-      const accounts = await this.userService.getCustomerAccount(customerID);
+      const accounts = await this.userService.getCustomerAccount(customerID as string);
       logger.info(accounts)
       logger.info("Response has been sent successfully");
       return this.sendResponse(res, 200, { success: true, message: 'Success', data: accounts });
@@ -69,7 +69,7 @@ export class UserController {
       return res.status(400).send({ message: 'Invalid account type. Accepted types are savings, current, and investment.' });
     }
     logger.info("account type is ",req.body)
-    const accountExists = await this.userService.getAccountType(customerID, accountType);
+    const accountExists = await this.userService.getAccountType(customerID as string, accountType);
     if(accountExists) {
       return this.sendResponse(res, 400, { success: false, message: 'Account already exists'});
 
@@ -83,8 +83,8 @@ export class UserController {
     try {
       logger.info("Started executing update balance function");
       const customerID = req.user?.googleId;
-      const updateBalance = await this.userService.addBalanceToIndividualAccount(customerID as string, req.body);
-      if(updateBalance.success) {
+      const updateBalanceSuccess = await this.userService.addBalanceToIndividualAccount(customerID as string, req.body);
+      if(updateBalanceSuccess) {
         logger.info("balance has been updated successfully");
         // return res.send({success: true, message: 'balance has been updated successfully'})
         return this.sendResponse(res, 200, { success: true, message: 'balance has been updated successfully'});

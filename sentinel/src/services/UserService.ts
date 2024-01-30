@@ -20,16 +20,17 @@ export class UserService {
     try {
       logger.info("User data is....")
       logger.info(userData);
+      const checkIfUserExists = await Customer.find({googleId: userData.googleId});
+      logger.info(checkIfUserExists);
+      if(checkIfUserExists.length) {
+        return { success: false, error: "A customer with the same full name already exists." }; 
+      }
       const customer = new Customer({
         ...userData,
         user: userData.googleId
       });
-      console.log("user ID is ", userData.googleId);
-      const checkIfUserExists = await Customer.find({googleId: userData.googleId});
-      console.log("Checking if user exists ", checkIfUserExists);
-      if(checkIfUserExists.length) {
-        return { success: false, error: "A customer with the same full name already exists." }; 
-      }
+      logger.info("user ID is ", userData.googleId);
+      
       await customer.save();
       logger.info(`Google ID is ${customer.googleId}`)
       const defaultAccount = new Account({
@@ -38,22 +39,21 @@ export class UserService {
         type: AccountType.Savings
       });
       await defaultAccount.save();
-      console.log("Default account is ", defaultAccount._id);
+      logger.info("Default account is ", defaultAccount._id);
       customer.accountIds.push(defaultAccount._id);
       await customer.save();
       return {success: true, error: null};
     } catch(err) {
-      console.log(err);
+      logger.error(err);
       if(err instanceof MongoServerError && err.code === 11000) {
         return { success: false, error: "A customer with the same full name already exists." };
       }
-      console.log(err)
       return { success: false, error: "An error occurred" }; 
     }
     
   }
 
-  async getCustomerAccount(userId: string | undefined): Promise<CustomerType[] | undefined> {
+  async getCustomerAccount(userId: string): Promise<CustomerType[]> {
     if (!userId) {
         return [];
     }
@@ -111,9 +111,12 @@ export class UserService {
     }
   }
 
-  async getAccountType(googleId: string | undefined, accountType: AccountType): Promise<boolean> {
+  async getAccountType(googleId: string, accountType: AccountType): Promise<boolean> {
     try {
       const customer = await Customer.findOne({googleId: googleId});
+      if(!customer) {
+        return false; 
+      }
       logger.info("customer is ", customer);
       if(!customer) {
         return false;
@@ -130,8 +133,8 @@ export class UserService {
       logger.info(account);
       return !!account;
     } catch(error) {
-      console.error('Error in getAccountType:', error);
-      throw error;
+      logger.error('Error in getAccountType:', error);
+      return false;
     }
   }
 
@@ -139,34 +142,38 @@ export class UserService {
     try {
       logger.info("username is ", googleId)
       const customer = await Customer.findOne({googleId: googleId});
+      if(!customer) {
+        return false;
+      }
       const newAccount = new Account({
         balance: 0,
-        customerId: customer?.googleId,
+        customerId: customer.googleId,
         type: accountType,
         createdAt: new Date()
       });
       const savedAccount = await newAccount.save();
-      customer?.accountIds.push(savedAccount._id);
-      await customer?.save();
+      customer.accountIds.push(savedAccount._id);
+      await customer.save();
       logger.info(`New ${accountType} account created for ${googleId}`);
       return true;
     } catch(err) {
       logger.error('Error in createNewAccountForExistingUser:', err);
-      throw err;
+      return false;
     }
     
     //return false
   }
 
-  async addBalanceToIndividualAccount(userName: string, balanceAdditionInfo: BalanceUpdateInfo): Promise<{success: boolean, error?: string | undefined}> {
+  async addBalanceToIndividualAccount(userName: string, balanceAdditionInfo: BalanceUpdateInfo): Promise<boolean> {
     try {
       const customer = await Customer.findOne({googleId: userName});
       
       if(!customer) {
         console.log("Customer is ", customer)
-        return {success: false, error: 'User does not exist'}
+        return false
       }
-      const accounts = await Account.find({customerId: customer._id});
+      const accounts = await Account.find({customerId: customer.googleId});
+      console.log("Accounts are ", accounts);
       await Promise.all(accounts.map(async account => {
         const accountType = account.type as keyof BalanceUpdateInfo;
         const additionAmount = balanceAdditionInfo[accountType];
@@ -175,11 +182,12 @@ export class UserService {
           await account.save();
           logger.info(`Added ${additionAmount} to ${accountType} account: ${account._id}`);
         }
+        
       }));
-      return { success: true };
+      return true;
     } catch(error) {
       logger.error('Error in addBalanceToIndividualAccounts:', error);
-      return { success: false, error: 'An error occurred while updating balances' };
+      return false
     }
   }
 
@@ -227,7 +235,5 @@ export class UserService {
         logger.error(`Error fetching account types: ${error}`);
         return [];
     }
-}
-
-
+  }
 }
