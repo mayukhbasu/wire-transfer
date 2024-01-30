@@ -18,11 +18,11 @@ export class UserController {
   }
 
   private sendResponse<T>(res: Response, statusCode: number, response: UserResponse<T>): Response {
+    res.set('Cache-Control', 'no-store');
     return res.status(statusCode).json(response);
   }
 
   public async createUserAccount(req: Request, res: Response): Promise<Response> {
-    res.set('Cache-Control', 'no-cache');
     try {
       logger.info("Starting to create new customer and account");
       const fullName = req.user?.displayName;
@@ -45,7 +45,6 @@ export class UserController {
   }
 
   public async getUserAccounts(req: Request, res: Response): Promise<Response> {
-    res.set('Cache-Control', 'no-cache');
     try {
       logger.info("Fetching customer and accounts");
       const customerID = req.user?.googleId;
@@ -63,7 +62,6 @@ export class UserController {
   }
 
   public async createOtherAccounts(req: Request, res: Response): Promise<Response> {
-    res.set('Cache-Control', 'no-cache');
     logger.info("Started exuting create other accounts");
     const customerID = req.user?.googleId;
     const accountType = req.body.accountType as AccountType;
@@ -83,7 +81,6 @@ export class UserController {
   }
 
   public async updatebalance(req: Request, res: Response): Promise<Response> {
-    res.set('Cache-Control', 'no-cache');
     try {
       logger.info("Started executing update balance function");
       
@@ -110,7 +107,6 @@ export class UserController {
   }
 
   public async getTotalbalance(req: Request, res: Response): Promise<Response> {
-    res.set('Cache-Control', 'no-cache');
     logger.info(`Started to execute get total balance`);
     try {
       const customerID = req.user?.googleId;
@@ -132,7 +128,6 @@ export class UserController {
   }
 
   public async getAvailableAccounts(req: Request, res: Response): Promise<string[] | undefined | Response> {
-    res.set('Cache-Control', 'no-cache');
     try {
       logger.info("Started executing getAvailableAccounts inside userController");
       const customerID = req.user?.googleId;

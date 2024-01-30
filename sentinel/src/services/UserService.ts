@@ -103,6 +103,7 @@ export class UserService {
               }
           }
       ]).exec();
+      logger.info("The latest customer records are ", customers);
       return customers;
     } catch (error) {
         console.error("An error occurred while fetching customer accounts:", error);
