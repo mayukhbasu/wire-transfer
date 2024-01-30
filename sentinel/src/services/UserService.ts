@@ -47,6 +47,7 @@ export class UserService {
       if(err instanceof MongoServerError && err.code === 11000) {
         return { success: false, error: "A customer with the same full name already exists." };
       }
+      console.log(err)
       return { success: false, error: "An error occurred" }; 
     }
     

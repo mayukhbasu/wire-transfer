@@ -2,7 +2,7 @@ import AccountCreationModal from "../../components/AccountCreationModal/AccountC
 
 const FundTransfer = () => {
   return (
-    <div>
+    <div data-testid="fund-transfer">
       
     </div>
   );

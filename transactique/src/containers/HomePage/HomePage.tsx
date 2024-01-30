@@ -13,7 +13,7 @@ const HomePage = () => {
   const dispatch = useDispatch();
   const [customerData, setCustomerData] = useState<Customer[] | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const customerInfo = useSelector((state: RootState) => state.customer.data);
+  const customerInfo = useSelector((state: RootState) => state.customer?.data);
 
   const handleAccountCreated = () => {
     setModalVisible(false);
@@ -51,8 +51,11 @@ const HomePage = () => {
   }
   return (
     <>
+    <div data-testid="home-page">
       {renderAccountSection()}
       { modalVisible && <AccountCreationModal onAccountCreated={handleAccountCreated}/>}
+    </div>
+      
     </>
     
   )

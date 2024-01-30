@@ -17,6 +17,14 @@ const AccountCard: React.FC<AccountProps> = ({account, addAmountToAccount}) => {
 
   const openModal = () => setIsOpenModal(true);
   
+  const handleAddFunds = () => {
+
+  }
+
+  const cancelAddFunds = () => {
+    setIsOpenModal(!isOpenModal);
+  }
+  
   const maskedId = useMaskAccountNumber(account.id)
   return (
     <div className='account-card'>
@@ -26,7 +34,7 @@ const AccountCard: React.FC<AccountProps> = ({account, addAmountToAccount}) => {
         <p className="balance">Balance: ${account.balance}</p>
         {
           isOpenModal && (
-            <AddFundModal accountID={account.id}/>
+            <AddFundModal addFunds={handleAddFunds} cancelFundTransfer={cancelAddFunds} accountID={account.id}/>
           )
         }
     </div>

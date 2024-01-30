@@ -3,11 +3,12 @@ import styles from './AddFundModal.module.css';
 import useNumericInput from '../../hooks/useNumericInput';
 
 type AddFundModalProps = {
-  accountID: string
+  accountID: string;
+  addFunds: (amount: number) => void;
+  cancelFundTransfer: () => void;
 }
-const AddFundModal: FC<AddFundModalProps> = ({accountID}) => {
+const AddFundModal: FC<AddFundModalProps> = ({accountID, cancelFundTransfer}) => {
   const numericInput = useNumericInput();
-  
   return (
     <div>
       <div className={styles.modalBackground} id="modalBackground">
@@ -17,7 +18,7 @@ const AddFundModal: FC<AddFundModalProps> = ({accountID}) => {
         <input type='text' onChange={numericInput.handleChange} value={numericInput.value} 
         placeholder='Enter amount in $'/>
         <button>Add</button>
-        <button style={{backgroundColor: 'red'}}>Cancel</button>
+        <button style={{backgroundColor: 'red'}} onClick={cancelFundTransfer}>Cancel</button>
       </div>
     </div>
     </div>
