@@ -2,9 +2,10 @@ import { CreateAnotherAccountSuccess } from "../types/createAnotherAccountTypes"
 import { UpdateCustomerBalanceFailure, UpdateCustomerBalanceSuccess } from "../types/updateBalanceTypes";
 
 export interface Account {
-  id: string;
+  accountNumber: string;
   type: string;
   balance: number;
+  customerId: string;
 }
 
 export interface GetAvailableAccounts {
