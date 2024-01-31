@@ -14,6 +14,13 @@ interface BalanceUpdateInfo {
   investment?: number;
 }
 
+type Account = {
+  balance: number,
+  customerId: string,
+  type: string,
+  accountNumber: string
+}
+
 export class UserService {
 
   async createCustomerAccount(userData: any): Promise<{success: boolean, error? : string | null}> {
@@ -231,7 +238,7 @@ export class UserService {
         
 
         // Fetch the accounts for the given customerId
-        const accounts = await Account.find({ customerId: userID}, 'type -_id').exec();
+        const accounts = await Account.find({ customerId: userID}, '-_id').exec();
         console.log(accounts);
         // Extract the types from the accounts
         const accountTypes = accounts.map(account => account.type);
@@ -245,6 +252,33 @@ export class UserService {
     } catch (error) {
         logger.error(`Error fetching account types: ${error}`);
         return [];
+    }
+  }
+
+  async getExistingCustomerAccounts(googleID: string): Promise<Account[]> {
+    logger.info("Inside get existing customer accounts");
+    try {
+      logger.info("Started get existing customer");
+      let query = {customerId: googleID};
+      const accounts = await Account.aggregate([
+        {
+          $match: query
+        },
+        {
+          $project: {
+            accountNumber: '$_id',
+            _id: 0,
+            balance: 1,
+            customerId: 1,
+            type: 1
+          }
+        }
+      ]).exec();
+      logger.info(accounts);
+      return accounts;
+    } catch(err) {
+      logger.error("Error fetching account details", err);
+      throw err;
     }
   }
 }

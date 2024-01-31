@@ -127,7 +127,7 @@ export class UserController {
     
   }
 
-  public async getAvailableAccounts(req: Request, res: Response): Promise<string[] | undefined | Response> {
+  public async getAvailableAccounts(req: Request, res: Response): Promise<Response> {
     try {
       logger.info("Started executing getAvailableAccounts inside userController");
       const customerID = req.user?.googleId;
@@ -139,6 +139,21 @@ export class UserController {
       return this.sendResponse(res, 200, { success: true, message: 'Accounts fetch successful', data: accounts});
     } catch(err) {
       logger.error(`Get total balance execution has failed`);
+      return this.sendResponse(res, 500, { success: false, message: 'An error occurred while getting the data'});
+    }
+  }
+
+  public async getCustomerAccounts(req:Request, res: Response): Promise<Response> {
+    try {
+      logger.info("Started executing get customer accounts");
+      const customerID = req.user?.googleId;
+      if(!customerID) {
+        return this.sendResponse(res, 400, { success: false, message: 'Customer does not exist'});
+      }
+      const accounts = await this.userService.getExistingCustomerAccounts(customerID);
+      return this.sendResponse(res, 200, { success: true, message: 'Accounts fetch successful', data: accounts});;
+    } catch(err) {
+      logger.error(`Unable to get customer accounts`);
       return this.sendResponse(res, 500, { success: false, message: 'An error occurred while getting the data'});
     }
   }

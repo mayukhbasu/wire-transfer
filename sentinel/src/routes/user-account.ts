@@ -11,5 +11,8 @@ router.post('/createOtherAccounts', isAuthenticated, (req: Request, res: Respons
 router.post('/updatebalance', isAuthenticated, (req: Request, res: Response) => userController.updatebalance(req, res));
 router.get('/getTotalBalance', isAuthenticated, (req: Request, res: Response) => userController.getTotalbalance(req, res));
 router.get('/getAvailableAccounts', isAuthenticated, (req: Request, res: Response) => userController.getAvailableAccounts(req, res));
+router.get('/getCustomerAccounts', isAuthenticated, (req: Request, res: Response) => userController.getCustomerAccounts(req, res));
+
+
 
 export default router;
