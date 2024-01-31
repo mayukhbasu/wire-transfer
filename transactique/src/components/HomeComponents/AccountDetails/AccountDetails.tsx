@@ -3,7 +3,7 @@ import './AccountDetails.css';
 
 type AccountDetailsProps = {
   accounts: {
-    id: string;
+    accountNumber: string;
     type: string;
     balance: number;
   }[],

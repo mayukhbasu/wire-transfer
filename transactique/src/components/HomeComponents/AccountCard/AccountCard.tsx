@@ -8,7 +8,7 @@ import { fetchCustomerInfo } from "../../../actions/get-customer-actions";
 
 type AccountProps = {
   account: {
-    id: string;
+    accountNumber: string;
     type: string;
     balance: number;
   }
@@ -31,7 +31,7 @@ const AccountCard: React.FC<AccountProps> = ({account}) => {
     setIsOpenModal(false);
   }
   
-  const maskedId = useMaskAccountNumber(account.id)
+  const maskedId = useMaskAccountNumber(account.accountNumber)
   return (
     <div className='account-card'>
       <button className="add-balance" onClick={openModal}>+</button>
@@ -40,7 +40,7 @@ const AccountCard: React.FC<AccountProps> = ({account}) => {
         <p className="balance">Balance: ${account.balance}</p>
         {
           isOpenModal && (
-            <AddFundModal addFunds={handleAddFunds} cancelFundTransfer={cancelAddFunds} accountID={account.id}/>
+            <AddFundModal addFunds={handleAddFunds} cancelFundTransfer={cancelAddFunds} accountID={account.accountNumber}/>
           )
         }
     </div>

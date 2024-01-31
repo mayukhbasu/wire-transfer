@@ -1,6 +1,19 @@
+import { useSelector } from 'react-redux';
 import './FundTransfer.css';
+import { RootState } from '../../reducers';
+import { useEffect } from 'react';
+import { useDispatch } from '../../hooks/useDispatch';
+import { fetchExistingCustomerAccount } from '../../actions/existing-customer-account-actions';
+import TransferFundForm from '../../components/TransferFundComponents/TransferFundForm/TransferFundForm';
 
 const FundTransfer = () => {
+
+  const accounts = useSelector((state: RootState) => state.getExistingCustomerAccounts.data.data);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchExistingCustomerAccount())
+  }, [dispatch]);
   return (
     <div data-testid="fund-transfer" className='container'>
       
@@ -9,14 +22,7 @@ const FundTransfer = () => {
           <button>Transfer Own Account</button>
           <button>Transfer Other Account</button>
         </div>
-        <div className='main'>
-          <select className='mainAccount' name="cars" id="cars">
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
-            <option value="mercedes">Mercedes</option>
-            <option value="audi">Audi</option>
-          </select>
-        </div>
+          <TransferFundForm accounts={accounts}/>
       </div>
     </div>
   );

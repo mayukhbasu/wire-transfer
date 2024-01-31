@@ -1,4 +1,5 @@
 import { CreateAnotherAccountSuccess } from "../types/createAnotherAccountTypes";
+import { GetExistingCustomerAccountsFailure, GetExistingCustomerAccountsSuccess } from "../types/getExistingCustomerAccountsTypes";
 import { UpdateCustomerBalanceFailure, UpdateCustomerBalanceSuccess } from "../types/updateBalanceTypes";
 
 export interface Account {
@@ -30,5 +31,11 @@ export interface UpdateBalanceResponse {
   loading: boolean;
   data: UpdateCustomerBalanceSuccess;
   error: UpdateCustomerBalanceFailure;
+}
+
+export interface GetExistingAccountsResponse {
+  loading: boolean;
+  data: GetExistingCustomerAccountsSuccess;
+  error: GetExistingCustomerAccountsFailure
 }
 
