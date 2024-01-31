@@ -13,3 +13,24 @@
   background-color: white; /* Adjust the color as needed */
   box-shadow: 2px 2px 2px 2px  #4CAF50;
 }
+
+.account-transfers button {
+  display: inline-block;
+  width: 50%;
+  border: 0px;
+  padding: 10px;
+  cursor: pointer;
+  border: 1px solid rgb(157, 192, 157);
+  background-color: white;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.account-transfers button:nth-of-type(2) {
+  border-right: 0px;
+}
+
+.account-transfers button:hover {
+  background-color: #4CAF50;
+  color: white;
+}
