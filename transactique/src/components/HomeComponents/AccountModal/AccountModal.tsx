@@ -1,6 +1,6 @@
-import { createCustomer } from '../../actions/create-account-actions';
-import { fetchCustomerInfo } from '../../actions/get-customer-actions';
-import { useDispatch } from '../../hooks/useDispatch';
+import { createCustomer } from '../../../actions/create-account-actions';
+import { fetchCustomerInfo } from '../../../actions/get-customer-actions';
+import { useDispatch } from '../../../hooks/useDispatch';
 import styles from './AccountModal.module.css';
 const AccountModal = () => {
 

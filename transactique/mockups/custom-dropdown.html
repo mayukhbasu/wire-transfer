@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .custom-select {
+  position: relative;
+  width: 200px;
+}
+
+.select-hidden {
+  display: none;
+}
+
+.select-styled {
+  position: relative;
+  background-color: #fff;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.select-styled span {
+  margin-right: 10px;
+}
+
+.select-styled:after {
+  content: '\25BC';
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+.select-options {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  border: 1px solid #ddd;
+  border-top: none;
+  z-index: 999;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.select-options li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.select-options li:hover {
+  background-color: #f7f7f7;
+}
+
+  </style>
+ 
+</head>
+<body>
+  <div class="custom-select">
+    <select id="mySelect" class="select-hidden">
+      <option value="option1">Option 1</option>
+      <option value="option2">Option 2</option>
+      <option value="option3">Option 3</option>
+      <!-- more options -->
+    </select>
+    <div class="select-styled">
+      <span>Select an option...</span>
+      <ul class="select-options">
+        <li data-value="option1">Option 1</li>
+        <li data-value="option2">Option 2</li>
+        <li data-value="option3">Option 3</li>
+        <!-- more list items -->
+      </ul>
+    </div>
+  </div>
+  <script>
+    document.querySelector('.select-styled').addEventListener('click', function() {
+    this.querySelector('.select-options').style.display = 'block';
+    });
+
+document.querySelectorAll('.select-options li').forEach(item => {
+  item.addEventListener('click', function() {
+    let select = document.getElementById('mySelect');
+    select.value = this.getAttribute('data-value');
+    document.querySelector('.select-styled span').textContent = this.textContent;
+    this.closest('.select-options').style.display = 'none';
+  });
+});
+
+  </script>
+</body>
+</html>

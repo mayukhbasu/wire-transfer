@@ -9,6 +9,14 @@ const FundTransfer = () => {
           <button>Transfer Own Account</button>
           <button>Transfer Other Account</button>
         </div>
+        <div className='main'>
+          <select className='mainAccount' name="cars" id="cars">
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="mercedes">Mercedes</option>
+            <option value="audi">Audi</option>
+          </select>
+        </div>
       </div>
     </div>
   );

@@ -1,10 +1,10 @@
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
 import styles from  './AccountCreationModal.module.css';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../reducers';
-import { fetchAvailableAccounts } from '../../actions/available-accounts-actions';
-import { useDispatch } from '../../hooks/useDispatch';
-import { createAnotherAccount } from '../../actions/create-other-accounts-actions';
+import { RootState } from '../../../reducers';
+import { fetchAvailableAccounts } from '../../../actions/available-accounts-actions';
+import { useDispatch } from '../../../hooks/useDispatch';
+import { createAnotherAccount } from '../../../actions/create-other-accounts-actions';
 
 
 interface AccountCreationModalProps {

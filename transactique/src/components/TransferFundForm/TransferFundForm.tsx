@@ -1,5 +1,5 @@
 
-import AccountCreationModal from '../AccountCreationModal/AccountCreationModal';
+import AccountCreationModal from '../HomeComponents/AccountCreationModal/AccountCreationModal';
 
 const TransferFundForm = () => {
   return (

@@ -4,10 +4,10 @@ import { useDispatch } from '../../hooks/useDispatch';
 import { useSelector } from 'react-redux';
 import { Customer } from '../../models/Customer';
 import { RootState } from '../../reducers';
-import AccountDetails from '../../components/AccountDetails/AccountDetails';
+import AccountDetails from '../../components/HomeComponents/AccountDetails/AccountDetails';
 import './HomePage.css';
-import AccountModal from '../../components/AccountModal/AccountModal';
-import AccountCreationModal from '../../components/AccountCreationModal/AccountCreationModal';
+import AccountModal from '../../components/HomeComponents/AccountModal/AccountModal';
+import AccountCreationModal from '../../components/HomeComponents/AccountCreationModal/AccountCreationModal';
 
 const HomePage = () => {
   const dispatch = useDispatch();

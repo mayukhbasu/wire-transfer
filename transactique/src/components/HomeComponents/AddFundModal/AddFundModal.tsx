@@ -1,6 +1,6 @@
 import React, { FC} from 'react';
 import styles from './AddFundModal.module.css';
-import useNumericInput from '../../hooks/useNumericInput';
+import useNumericInput from '../../../hooks/useNumericInput';
 
 type AddFundModalProps = {
   accountID: string;
